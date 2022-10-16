@@ -1,7 +1,0 @@
-.genre, .country {
-    display: inline-block;
-}
-
-#films-container .card:not(:last-child) {
-    border-bottom: 0;
-}

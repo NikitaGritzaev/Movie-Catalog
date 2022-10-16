@@ -1,0 +1,34 @@
+.genre, .country {
+    display: inline-block;
+}
+
+#films-container .card:not(:last-child) {
+    border-bottom: 0;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.avatar {
+    border-radius: 50%;
+    width:80px;
+    height:80px;
+    box-sizing: content-box;
+}
+
+.review-good {
+    border-color: #5cb85c;
+}
+
+.review-good p {
+    color: green;
+}
+
+.review-bad {
+    border-color: #d9534f;
+}
+
+.review-bad p {
+    color: red;
+}
