@@ -1,4 +1,15 @@
+import favoriteFilmItem from "/src/views/favoriteFilmItem.js";
+import filmItem from "/src/views/filmItem.js";
+import filmsContainer from "/src/views/filmsContainer.js";
+import login from "/src/views/login.js";
+import movieDetails from "/src/views/movieDetails.js";
+import profile from "/src/views/profile.js";
+import register from "/src/views/register.js";
+
+
 let api_url = "https://react-midterm.kreosoft.space/api";
+
+
 
 async function getFilms(page) {
     let response = await fetch(`${api_url}/movies/${page}`);
@@ -42,4 +53,4 @@ async function showFilms(page) {
 
     }
 }
-showFilms(1);
+
