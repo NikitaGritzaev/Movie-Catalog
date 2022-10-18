@@ -5,8 +5,6 @@ import login from "/src/views/login.js";
 import movieDetails from "/src/views/movieDetails.js";
 import profile from "/src/views/profile.js";
 import register from "/src/views/register.js";
-import navbar from "/src/views/navbar.js";
-import navbarGuest from "/src/views/navbarGuest.js";
 let api_url = "https://react-midterm.kreosoft.space/api";
 
 
