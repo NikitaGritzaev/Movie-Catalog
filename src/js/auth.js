@@ -2,7 +2,10 @@ let api_url = "https://react-midterm.kreosoft.space/api";
 
 export async function authUser() {
     let token = localStorage.getItem("jwt");
-    if (!token) return false;
+    if (!token) return {
+        auth: false,
+        user: {}
+    };
     try {
         let response = await fetch(`${api_url}/account/profile`, {
             headers: {
@@ -18,23 +21,25 @@ export async function authUser() {
         };
     }
     catch (err) {
+        localStorage.removeItem("jwt");
         return {
             auth: false,
-            user: {
-
-            }
+            user: {}
         };
     }
 }
 
 export async function logoutUser() {
+    let token = localStorage.getItem("jwt");
     localStorage.removeItem("jwt");
+    if (!token) return;
     try {
         let response = await fetch(`${api_url}/account/logout`, {
-            method: 'POST',
+            method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "Accept": "*/*"
+                "Accept": "*/*",
+                "Authorization": `Bearer ${token}`
             }
         });
     }
@@ -49,7 +54,7 @@ export async function loginUser() {
         let password = $("#password").val();
         if (!login || !password) return;
         let response = await fetch(`${api_url}/account/login`, {
-            method: 'POST',
+            method: "POST",
             headers: {
                 "Content-Type": "application/json",
                 "Accept": "*/*"
@@ -81,7 +86,6 @@ export async function registerUser(log, pass, passConfirm, email, name, birth, s
             headers: {
                 "Content-Type": "application/json",
                 "Accept": "*/*",
-                "Authorization": `Bearer ${token}`
             },
             body: JSON.stringify({
                 "userName": log,

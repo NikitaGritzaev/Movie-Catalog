@@ -23,7 +23,7 @@ export default () => /*навбар для авторизованного пол
                     <a class="nav-link" aria-current="page" href="/profile" id="user">Авторизован как - </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/1">Выйти</a>
+                    <a class="nav-link" href="/1" id="logout">Выйти</a>
                 </li>
             </ul>
         </div>
