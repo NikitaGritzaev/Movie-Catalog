@@ -32,3 +32,8 @@
 .review-bad p {
     color: red;
 }
+
+a {
+    color: inherit;
+    text-decoration: inherit;
+}

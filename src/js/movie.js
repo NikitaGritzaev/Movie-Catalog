@@ -1,18 +1,16 @@
 let api_url = "https://react-midterm.kreosoft.space/api";
-let movieDetails = new Object();
 
-async function getMovieDetails(filmId) {
+export async function getMovieDetails(filmId) {
     let response = await fetch(`${api_url}/movies/details/${filmId}`);
     if (response.ok) {
         let json = await response.json();
-        movieDetails = json;
         return json;
     } else {
         return new Object();
     }
 }
 
-async function showDetails(filmId) {
+export async function showDetails(filmId) {
     let film = await getMovieDetails(filmId);
     if (film) {
         document.getElementById("name").textContent = `${film.name} (${film.year})`;
@@ -30,4 +28,4 @@ async function showDetails(filmId) {
     }
 }
 
-showDetails("22158c42-001a-40a3-a2a7-08d9b9f3d2a2")
+//"22158c42-001a-40a3-a2a7-08d9b9f3d2a2"

@@ -1,12 +1,14 @@
-async function authUser() {
+let api_url = "https://react-midterm.kreosoft.space/api";
+
+export async function authUser() {
     let token = localStorage.getItem("jwt");
     if (!token) return false;
     try {
         let response = await fetch(`${api_url}/account/profile`, {
             headers: {
-              "Content-Type": "application/json",
-              "Accept": "*/*",
-              "Authorization": `Bearer ${token}`
+                "Content-Type": "application/json",
+                "Accept": "*/*",
+                "Authorization": `Bearer ${token}`
             }
         });
         let json = await response.json();
@@ -15,7 +17,7 @@ async function authUser() {
             user: json
         };
     }
-    catch(err) {
+    catch (err) {
         return {
             auth: false,
             user: {
@@ -23,17 +25,16 @@ async function authUser() {
             }
         };
     }
-    return response.ok;
 }
 
-async function logoutUser() {
+export async function logoutUser() {
     localStorage.removeItem("jwt");
     try {
         let response = await fetch(`${api_url}/account/logout`, {
             method: 'POST',
             headers: {
-            "Content-Type": "application/json",
-            "Accept": "*/*"
+                "Content-Type": "application/json",
+                "Accept": "*/*"
             }
         });
     }
@@ -42,25 +43,60 @@ async function logoutUser() {
     }
 }
 
-async function loginUser(login, password) {
+export async function loginUser() {
     try {
+        let login = $("#login").val();
+        let password = $("#password").val();
+        if (!login || !password) return;
         let response = await fetch(`${api_url}/account/login`, {
             method: 'POST',
             headers: {
-              "Content-Type": "application/json",
-              "Accept": "*/*"
+                "Content-Type": "application/json",
+                "Accept": "*/*"
             },
             body: JSON.stringify({
                 "username": login,
                 "password": password
-              })
+            })
+        });
+        if (response.ok) {
+            let json = await response.json();
+            localStorage.setItem("jwt", json.token);
+            location.reload();
+        }
+    }
+    catch (err) {
+        alert("Ошибка входа");
+    }
+}
+
+export async function registerUser(log, pass, passConfirm, email, name, birth, sex) {
+    if (pass != passConfirm ||
+        !email.match("/^\S+@\S+\.\S+$/") ||
+        name.length < 2 ||
+        birth > Date.now() ||
+        (sex != 0 && sex != 1)) return;
+    try {
+        let response = await fetch(`${api_url}/account/profile`, {
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "*/*",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify({
+                "userName": log,
+                "name": name,
+                "password": pass,
+                "email": email,
+                "birthDate": birth,
+                "gender": sex
+            })
         });
         if (response.ok) {
             let json = await response.json();
             localStorage.setItem("jwt", json.token);
         }
-    }
-    catch(err) {
-        alert("Ошибка входа");
+    } catch {
+        alert("ошибка!")
     }
 }

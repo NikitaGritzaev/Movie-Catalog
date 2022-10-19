@@ -9,7 +9,7 @@ export default () => /*форма входа*/ `
             <input type="password" class="form-control my-2" id="password" placeholder="Введите пароль">
 
             <button type="button" class="btn btn-primary my-2" id="loginBtn">Войти</button>
-            <button type="button" class="btn btn-secondary my-2 mw-75">Зарегистрироваться</button>
+            <a type="button" class="btn btn-secondary my-2 mw-75" id="regBtn" href="/register">Зарегистрироваться</a>
         </form>
     </div>
 </div>
