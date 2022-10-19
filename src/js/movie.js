@@ -13,18 +13,19 @@ export async function getMovieDetails(filmId) {
 export async function showDetails(filmId) {
     let film = await getMovieDetails(filmId);
     if (film) {
-        document.getElementById("name").textContent = `${film.name} (${film.year})`;
-        document.getElementById("time").textContent = film.time;
-        document.getElementById("tagline").textContent = `«${film.tagline}»`;
-        document.getElementById("director").textContent = film.director;
-        document.getElementById("budget").textContent = film.budget.toLocaleString('ru');
-        document.getElementById("fees").textContent = film.fees.toLocaleString('ru');
-        document.getElementById("ageLimit").textContent = `${film.ageLimit}+`;
-        document.getElementById("year").textContent = film.year;
-        document.getElementById("country").textContent = film.country;
-        document.getElementById("genres").textContent = film.genres.reduce((previousValue, currentValue) =>
-        previousValue + ", " + currentValue.name, "").slice(2);
-        document.getElementById("poster").src = film.poster;
+        $("#name").text(`${film.name} (${film.year})`);
+        $("#time").text(film.time);
+        $("#tagline").text(`«${film.tagline}»`);
+        $("#director").text(film.director);
+        $("#budget").text(film.budget.toLocaleString('ru'));
+        $("#fees").text(film.fees.toLocaleString('ru'));
+        $("#ageLimit").text(`${film.ageLimit}+`);
+        $("#year").text(film.year);
+        $("#country").text(film.country);
+        $("#about").text(film.description);
+        $("#genres").text(film.genres.reduce((previousValue, currentValue) =>
+        previousValue + ", " + currentValue.name, "").slice(2));
+        $("#poster").attr("src", film.poster);
     }
 }
 

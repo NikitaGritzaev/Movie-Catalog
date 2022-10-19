@@ -67,7 +67,10 @@ export async function loginUser() {
         if (response.ok) {
             let json = await response.json();
             localStorage.setItem("jwt", json.token);
-            location.reload();
+            location.pathname = "/";
+        }
+        else {
+            $("#warn").removeClass("d-none");
         }
     }
     catch (err) {
@@ -75,14 +78,22 @@ export async function loginUser() {
     }
 }
 
-export async function registerUser(log, pass, passConfirm, email, name, birth, sex) {
+export async function registerUser() {
+    let log = $("#login").val();
+    let pass = $("#password").val();
+    let passConfirm = $("#passwordConfirm").val();
+    let email = $("#email").val();
+    let name = $("#fullName").val();
+    let birth = $("#birthday").val();
+    let sex = $("#gender").val();
+
     if (pass != passConfirm ||
-        !email.match("/^\S+@\S+\.\S+$/") ||
+        !email.match(/^\S+@\S+\.\S+$/) ||
         name.length < 2 ||
-        birth > Date.now() ||
-        (sex != 0 && sex != 1)) return;
+        birth > Date.now()) return;
     try {
-        let response = await fetch(`${api_url}/account/profile`, {
+        let response = await fetch(`${api_url}/account/register`, {
+            method: "POST",
             headers: {
                 "Content-Type": "application/json",
                 "Accept": "*/*",
@@ -92,13 +103,14 @@ export async function registerUser(log, pass, passConfirm, email, name, birth, s
                 "name": name,
                 "password": pass,
                 "email": email,
-                "birthDate": birth,
-                "gender": sex
+                "birthDate": `${birth}T00:00:00.000Z`,
+                "gender": sex = "Мужской" ? 0 : 1
             })
         });
         if (response.ok) {
             let json = await response.json();
             localStorage.setItem("jwt", json.token);
+            location.pathname = "/";
         }
     } catch {
         alert("ошибка!")

@@ -65,6 +65,7 @@ let router = {
 
     register: function(){
         $("main").html(register());
+        $("#signUpBtn").on("click", () => registerUser());
     },
 
     favorites: function() {

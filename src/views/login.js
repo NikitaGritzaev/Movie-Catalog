@@ -7,6 +7,7 @@ export default () => /*форма входа*/ `
 
             <label for="inputPassword">Пароль</label>
             <input type="password" class="form-control my-2" id="password" placeholder="Введите пароль">
+            <p class="d-none text-danger" id="warn">Неверные данные!</p>
 
             <button type="button" class="btn btn-primary my-2" id="loginBtn">Войти</button>
             <a type="button" class="btn btn-secondary my-2 mw-75" id="regBtn" href="/register">Зарегистрироваться</a>
