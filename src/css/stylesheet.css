@@ -37,3 +37,7 @@ a {
     color: inherit;
     text-decoration: inherit;
 }
+
+::selection {
+    background: #ffb7b7;
+}

@@ -63,9 +63,18 @@ let router = {
         $("#loginBtn").on("click", () => loginUser());
     },
 
-    register: function(){
+    register: function() {
         $("main").html(register());
-        $("#signUpBtn").on("click", () => registerUser());
+        $("#signUpBtn").on("input", () => registerUser());
+        let checkConfirm = () => {
+            let pass = $("#password").val();
+            let passConfirm = $("#passwordConfirm").val();
+            let errorText = $("#passConfirmWarn");
+            if (pass != passConfirm && pass && passConfirm) errorText.removeClass("d-none");
+            else errorText.addClass("d-none");
+        }
+        $("#passwordConfirm").on("change", checkConfirm);
+        $("#password").on("change", checkConfirm);
     },
 
     favorites: function() {

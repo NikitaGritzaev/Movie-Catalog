@@ -15,23 +15,33 @@ export async function authUser() {
             }
         });
         let json = await response.json();
-        return {
+
+        let user = {
             auth: true,
             user: json
         };
+        localStorage.setItem("user", JSON.stringify(user))
+        return user;
     }
     catch (err) {
         localStorage.removeItem("jwt");
-        return {
+        let user = {
             auth: false,
             user: {}
         };
+        localStorage.setItem("user", JSON.stringify(user))
+        return user;
     }
 }
 
 export async function logoutUser() {
     let token = localStorage.getItem("jwt");
     localStorage.removeItem("jwt");
+    let user = {
+        auth: false,
+        user: {}
+    };
+    localStorage.setItem("user", JSON.stringify(user));
     if (!token) return;
     try {
         let response = await fetch(`${api_url}/account/logout`, {

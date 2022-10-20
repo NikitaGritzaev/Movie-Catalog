@@ -34,9 +34,9 @@ export async function showFilms(page) {
 
             let badgeRating = newFilm.querySelector(".badge");
             if (currentMovie.reviews.length) {
-                badgeRating.textContent = "Средняя оценка - " + currentMovie.reviews.reduce((previousValue, currentValue) =>
+                badgeRating.textContent = "Средняя оценка - " + (currentMovie.reviews.reduce((previousValue, currentValue) =>
                 previousValue + currentValue.rating
-            , 0) / currentMovie.reviews.length;
+            , 0) / currentMovie.reviews.length).toFixed(1);
             }
             else {
                 badgeRating.textContent = "Ещё нет оценок"

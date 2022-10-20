@@ -8,7 +8,6 @@ export default () => /*форма регистрации*/ `
                     <input type="text" class="form-control my-2" id="login" placeholder="Введите логин">
                 </div>
 
-
                 <div class="col-md-6 col-12">
                     <label for="password">Пароль</label>
                     <input type="password" class="form-control my-2" id="password" placeholder="Введите пароль">
@@ -17,6 +16,7 @@ export default () => /*форма регистрации*/ `
                     <label for="passwordConfirm">Подтверждение пароля</label>
                     <input type="password" class="form-control my-2" id="passwordConfirm"
                         placeholder="Подтвердите пароль">
+                    <p class="text-danger d-none" id="passConfirmWarn">Пароли не совпадают!</p>
                 </div>
 
 
