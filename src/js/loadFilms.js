@@ -13,7 +13,6 @@ export async function getFilms(page) {
     }
 }
 
-//TODO: переписать на JQuery
 export async function showFilms(page) {
     if (page<0) return;
     let films = await getFilms(page);

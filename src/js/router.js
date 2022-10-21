@@ -3,11 +3,13 @@ import register from "/src/views/register.js";
 import filmsContainer from "/src/views/filmsContainer.js";
 import filmItem from "/src/views/filmItem.js";
 import movieDetails from "/src/views/movieDetails.js";
+import profile from "/src/views/profile.js";
 
 import {authUser, registerUser, loginUser, logoutUser} from "/src/js/auth.js";
 import {getFilms, showFilms} from "/src/js/loadFilms.js";
 import {getMovieDetails, showDetails} from "/src/js/movie.js";
 import { favorite, getFavoriteFilms, showFavoriteFilms } from "/src/js/favoriteFilms.js";
+import { showProfile, changeProfile } from "/src/js/profile.js";
 
 
 let router = {
@@ -87,7 +89,14 @@ let router = {
     movie: function(id) {
         $("main").html(movieDetails());
         showDetails(id);
+    },
+
+    profile: function() {
+        $("main").html(profile());
+        showProfile();
     }
+
+
 }
 
 document.addEventListener("DOMContentLoaded", function(event) {

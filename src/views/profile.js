@@ -39,7 +39,7 @@ export default () => /*профиль пользователя*/ `
 
 
       <div>
-        <button type="button" class="btn btn-primary my-2" id="signUpBtn">Зарегистрироваться</button>
+        <button type="button" class="btn btn-warning my-2" id="editProfileBtn">Сохранить</button>
       </div>
 
     </div>
