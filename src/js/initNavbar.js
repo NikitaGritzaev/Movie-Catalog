@@ -7,9 +7,7 @@ async function setNavbar() {
     header.empty();
     let auth = await authUser();
     if (auth.auth)  {
-        let fakeDiv = document.createElement("div");
-        fakeDiv.innerHTML = navbar().trim();
-        let nav = fakeDiv.firstChild;
+        let nav = $(navbar());
         $(nav).find("#user").text(`Авторизован как ${auth.user.name}`);
         $(nav).find("#logout").on("click", logoutUser);
         header.append(nav);
