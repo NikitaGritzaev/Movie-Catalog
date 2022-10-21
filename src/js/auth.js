@@ -114,7 +114,7 @@ export async function registerUser() {
                 "password": pass,
                 "email": email,
                 "birthDate": `${birth}T00:00:00.000Z`,
-                "gender": sex = "Мужской" ? 0 : 1
+                "gender": sex == "Мужской" ? 0 : 1
             })
         });
         if (response.ok) {

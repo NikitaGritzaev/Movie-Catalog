@@ -69,7 +69,7 @@ let router = {
 
     register: function() {
         $("main").html(register());
-        $("#signUpBtn").on("input", () => registerUser());
+        $("#signUpBtn").on("click", () => registerUser());
         let checkConfirm = () => {
             let pass = $("#password").val();
             let passConfirm = $("#passwordConfirm").val();
