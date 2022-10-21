@@ -7,6 +7,8 @@ import movieDetails from "/src/views/movieDetails.js";
 import {authUser, registerUser, loginUser, logoutUser} from "/src/js/auth.js";
 import {getFilms, showFilms} from "/src/js/loadFilms.js";
 import {getMovieDetails, showDetails} from "/src/js/movie.js";
+import { favorite, getFavoriteFilms, showFavoriteFilms } from "/src/js/favoriteFilms.js";
+
 
 let router = {
     routes: {
@@ -79,7 +81,7 @@ let router = {
 
     favorites: function() {
         $("main").html(filmsContainer());
-        /**/
+        showFavoriteFilms();
     },
 
     movie: function(id) {

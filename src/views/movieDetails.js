@@ -7,7 +7,7 @@ export default () => /*детали фильма*/ `
     <div class="col-12 col-md-9">
         <h1 id="name"></h1>
         <p id="about"></p>
-        <button type="button" class="btn btn-outline-primary d-none">Добавить в избранное +</button>
+        <button type="button" class="btn btn-outline-primary d-none" id="toggleFavorite">Добавить в избранное +</button>
         <h2 class="mt-5">О фильме</h2>
         <div class="row border-bottom border-secondary" style="border-bottom: 1px solid gray;">
             <div class="col-6 text-start py-2">Год производства</div>
