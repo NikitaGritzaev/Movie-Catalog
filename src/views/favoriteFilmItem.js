@@ -5,7 +5,7 @@ export default () => /*фильм из избранного*/ `
             <img src="..." style="width: 100%; height: 100%;" class="rounded-0" alt="...">
         </div>
         <div class="col-9 p-2">
-            <h3 class="card-title p-0"></h3>
+            <h3 class="card-title p-0"><a></a></h3>
             <div class="year"></div>
             <div>
                 <p class="country mb-1"></p> • <p class="genre mb-1"></p>
@@ -13,7 +13,7 @@ export default () => /*фильм из избранного*/ `
             <span class="badge bg-primary"></span>
         </div>
         <div class="col my-auto">
-            <button type="button" class="btn btn-danger my-2 p-2">Удалить из избранного</button>
+            <button type="button" class="btn btn-danger my-2 p-2 deleteFavorite">Удалить из избранного</button>
         </div>
     </div>
 </div>

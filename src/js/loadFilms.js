@@ -1,5 +1,6 @@
 import filmItem from "/src/views/filmItem.js";
 import filmsContainer from "/src/views/filmsContainer.js";
+
 let api_url = "https://react-midterm.kreosoft.space/api";
 
 export async function getFilms(page) {

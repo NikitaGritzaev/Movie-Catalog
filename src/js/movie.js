@@ -2,6 +2,7 @@ import review from "/src/views/review.js";
 import addReview from "/src/views/addReview.js";
 
 import { createReview, deleteReview } from "/src/js/createReview.js";
+import { favorite, getFavoriteFilms } from "/src/js/favoriteFilms.js";
 
 let api_url = "https://react-midterm.kreosoft.space/api";
 
@@ -31,6 +32,37 @@ export async function showDetails(filmId) {
     if (film.genres) $("#genres").text(film.genres.reduce((previousValue, currentValue) =>
         previousValue + ", " + currentValue.name, "").slice(2));
     if (film.poster) $("#poster").attr("src", film.poster);
+
+    let currentUser = JSON.parse(localStorage.getItem("user"));
+    if (currentUser?.auth) {
+        let favorites =  await getFavoriteFilms();
+        console.log(favorites);
+
+        let isAdded = false;
+        let toggleButton = $("#toggleFavorite"); 
+
+        favorites.movies.forEach(val => {
+            if (val.id == filmId) {
+                isAdded = true;
+                toggleButton.text("Удалить из избранного");
+                toggleButton.removeClass("btn-outline-primary");
+                toggleButton.addClass("btn-danger");
+                return;
+            }
+        })
+        toggleButton.removeClass("d-none");
+
+        toggleButton.one("click", async () => {
+            let request = await favorite(filmId, isAdded);
+            if (request) {
+                toggleButton.removeClass("btn-outline-primary");
+                toggleButton.removeClass("btn-danger");
+                toggleButton.addClass("btn-success");
+                isAdded ? toggleButton.text("Удалено!") : toggleButton.text("Добавлено!");
+            }
+        })
+    }
+
     showReviews(film?.reviews, filmId);
 }
 
