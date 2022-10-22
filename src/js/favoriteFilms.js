@@ -1,4 +1,3 @@
-let api_url = "https://react-midterm.kreosoft.space/api";
 import favoriteFilmItem from "/src/views/favoriteFilmItem.js";
 
 export async function favorite(movieId, deleteFavorite = false) {

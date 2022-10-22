@@ -4,8 +4,6 @@ import addReview from "/src/views/addReview.js";
 import { createReview, deleteReview } from "/src/js/createReview.js";
 import { favorite, getFavoriteFilms } from "/src/js/favoriteFilms.js";
 
-let api_url = "https://react-midterm.kreosoft.space/api";
-
 export async function getMovieDetails(filmId) {
     let response = await fetch(`${api_url}/movies/details/${filmId}`);
     if (response.ok) {

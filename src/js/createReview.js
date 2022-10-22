@@ -1,5 +1,3 @@
-let api_url = "https://react-midterm.kreosoft.space/api";
-
 export async function createReview(movieId, edit = false, reviewId = "0") {
     let token = localStorage.getItem("jwt");
     if (!token) return false;

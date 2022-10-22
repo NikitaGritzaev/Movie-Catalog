@@ -1,5 +1,3 @@
-let api_url = "https://react-midterm.kreosoft.space/api";
-
 export async function getProfileDetails() {
     let token = localStorage.getItem("jwt");
     if (!token) return;
