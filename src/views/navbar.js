@@ -20,10 +20,10 @@ export default () => /*навбар для авторизованного пол
             </ul>
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="/profile" id="user"></a>
+                    <a class="nav-link active" aria-current="page" href="/profile" id="user"></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/1" id="logout">Выйти</a>
+                    <a class="nav-link active" href="/1" id="logout">Выйти</a>
                 </li>
             </ul>
         </div>

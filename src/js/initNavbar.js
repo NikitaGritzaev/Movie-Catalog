@@ -6,15 +6,22 @@ async function setNavbar() {
     let header = $("header");
     header.empty();
     let auth = await authUser();
+    let nav;
     if (auth.auth)  {
-        let nav = $(navbar());
+        nav = $(navbar());
         $(nav).find("#user").text(`Авторизован как ${auth.user.name}`);
         $(nav).find("#logout").on("click", logoutUser);
-        header.append(nav);
     }
     else {
-        header.html(navbarGuest());
+        nav = $(navbarGuest());
     }
+    nav.find(".me-auto a").on("click", event => {
+        nav.find(".me-auto a").removeClass("active");
+        $(event.currentTarget).addClass("active");
+    })
+    if (window.location.pathname.match(/\/\d+/)) nav.find(`a[href="/1"]`).addClass("active");
+    else nav.find(`a[href="${window.location.pathname}"]`).addClass("active");
+    header.append(nav);
 }
 
 setNavbar();
