@@ -1,46 +1,32 @@
 import login from "/src/views/login.js";
 import register from "/src/views/register.js";
 import filmsContainer from "/src/views/filmsContainer.js";
-import filmItem from "/src/views/filmItem.js";
 import movieDetails from "/src/views/movieDetails.js";
 import profile from "/src/views/profile.js";
 
-import {authUser, registerUser, loginUser, logoutUser} from "/src/js/auth.js";
-import {getFilms, showFilms} from "/src/js/loadFilms.js";
-import {getMovieDetails, showDetails} from "/src/js/movie.js";
-import { favorite, getFavoriteFilms, showFavoriteFilms } from "/src/js/favoriteFilms.js";
-import { showProfile, changeProfile } from "/src/js/profile.js";
+import {registerUser, loginUser } from "/src/js/auth.js";
+import {showFilms} from "/src/js/loadFilms.js";
+import {showDetails} from "/src/js/movie.js";
+import { showFavoriteFilms } from "/src/js/favoriteFilms.js";
+import { showProfile } from "/src/js/profile.js";
 
 
 let router = {
-    routes: {
-        "/login": "login",
-        "/register": "register",
-        "/favorites": "favorites",
-        "/profile": "profile",
-        "/movie/:id": "movie",
-        "/:id": "catalog",
-        "/": "catalog"
-    },
-
-    init: function () {
-        this._routes = [];
-        for (let route in this.routes) {
-            let method = this.routes[route];
-            this._routes.push({
-                pattern: new RegExp('^' + route.replace(/:\w+/g, '([a-zA-Z0-9_-]+)') + '$'),
-                callback: this[method]
-            });
-        }
-        router.capture();
-    },
+    routes: [
+        {pattern: /^\/login$/, callback: "login"},
+        {pattern: /^\/register$/, callback: "register"},
+        {pattern: /^\/favorites$/, callback: "favorites"},
+        {pattern: /^\/profile$/, callback: "profile"},
+        {pattern: /^\/movie\/([a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12})$/, callback: "movie"},
+        {pattern: /^\/([0-9]*)$/, callback: "catalog"}
+    ],
 
     dispatch: function(path) {
-        for (let i = 0; i < this._routes.length; ++i) {
-            let args = path.match(this._routes[i].pattern);
+        for (let i = 0; i < this.routes.length; ++i) {
+            let args = path.match(this.routes[i].pattern);
             if (args) {
                 $("main").empty();
-                this._routes[i].callback.apply(this, args.slice(1));
+                routerFunctions[this.routes[i].callback].apply(this, args.slice(1));
                 history.pushState({}, null, path);
                 break;
             }
@@ -55,9 +41,12 @@ let router = {
                router.dispatch(url.pathname);
             }
         });
-    },
+    }
+}
 
+let routerFunctions = {
     catalog: function(page=1) {
+        if (!page) page=1;
         $("main").html(filmsContainer());
         showFilms(page);
     },
@@ -96,11 +85,10 @@ let router = {
         showProfile();
     }
 
-
 }
 
 document.addEventListener("DOMContentLoaded", function(event) {
-    router.init();
+    router.capture();
     router.dispatch(window.location.pathname);
 });
 
