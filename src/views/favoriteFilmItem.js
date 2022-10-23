@@ -8,7 +8,7 @@ export default () => /*фильм из избранного*/ `
             <h3 class="card-title p-0"><a></a></h3>
             <div class="year"></div>
             <div>
-                <p class="country mb-1"></p> • <p class="genre mb-1"></p>
+                <p class="country-genre mb-1"></p>
             </div>
             <span class="badge bg-primary"></span>
         </div>

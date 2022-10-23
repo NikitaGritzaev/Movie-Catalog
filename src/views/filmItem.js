@@ -8,7 +8,7 @@ export default () => /*контейнер для фильма из катало�
             <h3 class="card-title p-0"><a href=""></a></h3>
             <div class="mt-2 year"></div>
             <div class="mt-4">
-                <p class="country"></p> • <p class="genre"></p>
+                <p class="country-genre">
             </div>
         </div>
         <div class="col p-2 my-auto text-start">

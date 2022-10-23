@@ -1,8 +1,6 @@
 import filmItem from "/src/views/filmItem.js";
 import pagination from "/src/views/pagination.js";
 
-let api_url = "https://react-midterm.kreosoft.space/api";
-
 export async function getFilms(page) {
     let response = await fetch(`${api_url}/movies/${page}`);
     if (response.ok) {
@@ -32,10 +30,10 @@ export async function showFilms(page) {
         newFilm.find(".card-title a").attr("href", `/movie/${currentMovie.id}`);
         newFilm.find("img").attr("src", currentMovie.poster);
         newFilm.find(".year").text(currentMovie.year);
-        newFilm.find(".country").text(currentMovie.country);
-        newFilm.find(".genre").text(currentMovie.genres.reduce((previousValue, currentValue) =>
-            previousValue + ", " + currentValue.name
-            , "").slice(2));
+        let genres = currentMovie.genres.reduce((previousValue, currentValue) =>
+        previousValue + ", " + currentValue.name
+        , "").slice(2);
+        newFilm.find(".country-genre").text(`${currentMovie.country} • ${genres}`);
 
         let badgeRating = newFilm.find(".badge");
         if (currentMovie.reviews.length) {
