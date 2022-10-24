@@ -11,16 +11,18 @@ import { showFilms } from "/src/js/loadFilms.js";
 import { showDetails } from "/src/js/movie.js";
 import { showFavoriteFilms } from "/src/js/favoriteFilms.js";
 import { showProfile } from "/src/js/profile.js";
+import { setNavbar } from "/src/js/initNavbar.js";
 
 
 let router = {
     routes: [
-        { pattern: /^\/login$/, callback: "login" },
-        { pattern: /^\/register$/, callback: "register" },
-        { pattern: /^\/favorites$/, callback: "favorites" },
-        { pattern: /^\/profile$/, callback: "profile" },
-        { pattern: /^\/movie\/([a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12})$/, callback: "movie" },
-        { pattern: /^\/([0-9]*)$/, callback: "catalog" }
+        { pattern: /^\/login$/, callback: "login", nav: [] },
+        { pattern: /^\/register$/, callback: "register", nav: [] },
+        { pattern: /^\/favorites$/, callback: "favorites", nav: ["favoritesLink"] },
+        { pattern: /^\/profile$/, callback: "profile", nav: ["profileLink"] },
+        { pattern: /^\/movie\/([a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12})$/,
+          callback: "movie", nav: ["moviesLink"] },
+        { pattern: /^\/([0-9]*)$/, callback: "catalog", nav: ["moviesLink"] }
     ],
 
     dispatch: function (path) {
@@ -32,14 +34,17 @@ let router = {
                     return;
                 };
                 history.pushState({}, null, path);
+                $(".me-auto a").removeClass("active");
+                this.routes[i].nav.forEach(val => $(`#${val}`).addClass("active"));
                 return;
             }
             routerFunctions["default"]();
         }
     },
 
-    capture: function () {
-        document.addEventListener('click', function (event) {
+    init: async function () {
+        await setNavbar();
+        $(document).on("click", function (event) {
             if (event.target.href != undefined) {
                 event.preventDefault();
                 let url = new URL(event.target.href);
@@ -117,8 +122,8 @@ let routerFunctions = {
 
 }
 
-document.addEventListener("DOMContentLoaded", function (event) {
-    router.capture();
+$(document).on("DOMContentLoaded", async function (event) {
+    await router.init();
     router.dispatch(window.location.pathname);
 });
 

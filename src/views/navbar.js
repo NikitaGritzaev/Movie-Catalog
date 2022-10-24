@@ -9,13 +9,13 @@ export default () => /*навбар для авторизованного пол
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="/1">Фильмы</a>
+                    <a class="nav-link" aria-current="page" href="/1" id="moviesLink">Фильмы</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="/favorites">Избранное</a>
+                    <a class="nav-link" aria-current="page" href="/favorites" id="favoritesLink">Избранное</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="/profile">Мой профиль</a>
+                    <a class="nav-link" aria-current="page" href="/profile" id="profileLink">Мой профиль</a>
                 </li>
             </ul>
             <ul class="navbar-nav ms-auto">
