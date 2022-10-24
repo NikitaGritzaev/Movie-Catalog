@@ -4,7 +4,8 @@ import filmsContainer from "/src/views/filmsContainer.js";
 import movieDetails from "/src/views/movieDetails.js";
 import profile from "/src/views/profile.js";
 
-import { registerUser, loginUser } from "/src/js/auth.js";
+import { loginUser } from "/src/js/auth.js";
+import { initRegisterPage } from "/src/js/registerPage.js";
 import { showFilms } from "/src/js/loadFilms.js";
 import { showDetails } from "/src/js/movie.js";
 import { showFavoriteFilms } from "/src/js/favoriteFilms.js";
@@ -66,7 +67,7 @@ let routerFunctions = {
         }
         
         $("main").html(login());
-        $("#loginBtn").on("click", () => loginUser());
+        $("#loginBtn").on("click", () => loginUser($("#login").val(), $("#password").val()));
         return true;
     },
 
@@ -76,16 +77,7 @@ let routerFunctions = {
             return false;
         }
         $("main").html(register());
-        $("#signUpBtn").on("click", () => registerUser());
-        let checkConfirm = () => {
-            let pass = $("#password").val();
-            let passConfirm = $("#passwordConfirm").val();
-            let errorText = $("#passConfirmWarn");
-            if (pass != passConfirm && pass && passConfirm) errorText.removeClass("d-none");
-            else errorText.addClass("d-none");
-        }
-        $("#passwordConfirm").on("change", checkConfirm);
-        $("#password").on("change", checkConfirm);
+        initRegisterPage();
         return true;
     },
 

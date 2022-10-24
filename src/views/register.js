@@ -16,14 +16,12 @@ export default () => /*форма регистрации*/ `
                     <label for="passwordConfirm">Подтверждение пароля</label>
                     <input type="password" class="form-control my-2" id="passwordConfirm"
                         placeholder="Подтвердите пароль">
-                    <p class="text-danger d-none" id="passConfirmWarn">Пароли не совпадают!</p>
                 </div>
 
 
                 <div class="col-md-6 col-12">
                     <label for="email">Email</label>
-                    <input type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
-                        class="form-control my-2" id="email" placeholder="Введите email">
+                    <input type="email" class="form-control my-2" id="email" placeholder="Введите email">
                 </div>
                 <div class="col-md-6 col-12">
                     <label for="fullName">ФИО</label>
@@ -33,7 +31,7 @@ export default () => /*форма регистрации*/ `
 
                 <div class="col-md-6 col-12">
                     <label for="birthday">Дата рождения</label>
-                    <input type="date" class="form-control my-2" id="birthday">
+                    <input type="date" class="form-control my-2" id="birthday" min="1900-01-01">
                 </div>
                 <div class="col-md-6 col-12">
                     <label for="gender">Укажите пол</label>

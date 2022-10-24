@@ -1,9 +1,7 @@
 export async function authUser() {
     let token = localStorage.getItem("jwt");
-    if (!token) return {
-        auth: false,
-        user: {}
-    };
+    let guest = { auth: false, user: {} };
+    if (!token) return guest;
     try {
         let response = await fetch(`${api_url}/account/profile`, {
             headers: {
@@ -21,14 +19,10 @@ export async function authUser() {
         localStorage.setItem("user", JSON.stringify(user))
         return user;
     }
-    catch (err) {
+    catch {
         localStorage.removeItem("jwt");
-        let user = {
-            auth: false,
-            user: {}
-        };
         localStorage.setItem("user", JSON.stringify(user))
-        return user;
+        return guest;
     }
 }
 
@@ -42,7 +36,7 @@ export async function logoutUser() {
     localStorage.setItem("user", JSON.stringify(user));
     if (!token) return;
     try {
-        let response = await fetch(`${api_url}/account/logout`, {
+        await fetch(`${api_url}/account/logout`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -56,11 +50,15 @@ export async function logoutUser() {
     }
 }
 
-export async function loginUser() {
+export async function loginUser(login, password) {
     try {
-        let login = $("#login").val();
-        let password = $("#password").val();
-        if (!login || !password) return;
+        if (login.length < 2 ||
+            login.length > 32 ||
+            !login.match(/^[a-zA-Z0-9\-_]+$/) ||
+            password.length < 8 ||
+            password.length > 64 ||
+            !password.match(/^[a-zA-Z0-9\-_!@#№$%^&?*+=(){}[\]<>~]+$/)) return;
+
         let response = await fetch(`${api_url}/account/login`, {
             method: "POST",
             headers: {
@@ -86,19 +84,22 @@ export async function loginUser() {
     }
 }
 
-export async function registerUser() {
-    let log = $("#login").val();
-    let pass = $("#password").val();
-    let passConfirm = $("#passwordConfirm").val();
-    let email = $("#email").val();
-    let name = $("#fullName").val();
-    let birth = $("#birthday").val();
-    let sex = $("#gender").val();
-
+export async function registerUser(log, pass, passConfirm, email, name, birth, sex) {
+    let date = new Date($("#birthday").val());
     if (pass != passConfirm ||
+        log.length < 2 ||
+        log.length > 32 ||
+        !log.match(/^[a-zA-Z0-9\-_]+$/) ||
+        pass.length < 8 ||
+        pass.length > 64 ||
+        !pass.match(/^[a-zA-Z0-9\-_!@#№$%^&?*+=(){}[\]<>~]+$/) ||
+        name.length < 4 ||
+        name.length > 64 ||
+        !name.match(/^[а-яА-ЯёЁa-zA-Z0-9\-_ ]+$/) ||
         !email.match(/^\S+@\S+\.\S+$/) ||
-        name.length < 2 ||
-        birth > Date.now()) return;
+        date > Date.now() ||
+        date < new Date("1900-01-01")) return;
+
     try {
         let response = await fetch(`${api_url}/account/register`, {
             method: "POST",
@@ -112,7 +113,7 @@ export async function registerUser() {
                 "password": pass,
                 "email": email,
                 "birthDate": `${birth}T00:00:00.000Z`,
-                "gender": sex == "Мужской" ? 0 : 1
+                "gender": sex == "Мужской" ? 1 : 0
             })
         });
         if (response.ok) {
