@@ -67,6 +67,7 @@ let routerFunctions = {
         }
         
         $("main").html(login());
+        $(".log").fadeIn(1000);
         $("#loginBtn").on("click", () => loginUser($("#login").val(), $("#password").val()));
         return true;
     },
@@ -77,6 +78,7 @@ let routerFunctions = {
             return false;
         }
         $("main").html(register());
+        $(".reg").fadeIn(1000);
         initRegisterPage();
         return true;
     },

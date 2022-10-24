@@ -1,5 +1,5 @@
 export default () => /*фильм из избранного*/ `
-<div class="card rounded-0 film">
+<div class="card rounded-0 film" style="display: none">
     <div class="row">
         <div class="mt-2 mb-2" style="width: 130px; height: 130px">
             <img src="..." style="width: 100%; height: 100%;" class="rounded-0" alt="...">

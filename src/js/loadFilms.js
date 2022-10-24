@@ -46,6 +46,7 @@ export async function showFilms(page) {
         }
         movieContainer.append(newFilm);
     })
+    $(".card").slideDown("normal");
     let pagesElement = $(pagination());
     if (page <= 1) pagesElement.find("#back").addClass("disabled");
     if (page >= pages.pageCount) pagesElement.find("#forward").addClass("disabled");

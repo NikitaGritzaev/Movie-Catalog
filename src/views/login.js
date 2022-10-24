@@ -1,5 +1,5 @@
 export default () => /*форма входа*/ `
-<div class="card p-0 mx-auto my-4 bold" style="width: 85%;">
+<div class="card p-0 mx-auto my-4 bold log" style="width: 85%; display: none">
     <div class="card-body">
         <form>
             <label for="inputLogin">Логин</label>

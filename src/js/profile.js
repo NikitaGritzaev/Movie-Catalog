@@ -14,7 +14,6 @@ export async function getProfileDetails() {
 
 export async function showProfile() {
     let details = await getProfileDetails();
-    console.log(details);
     $("#email").val(details.email);
     $("#avatarLink").val(details.avatarLink);
     if (details.avatarLink) $("#avatarImage").prop("src", details.avatarLink);
@@ -26,7 +25,7 @@ export async function showProfile() {
     $("#editProfileBtn").on("click", async () => {
         let chng = await changeProfile();
     })
-
+    $("#profile-container").show(700);
 }
 
 export async function changeProfile() {

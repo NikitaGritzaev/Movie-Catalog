@@ -1,5 +1,5 @@
 export default () => /*профиль пользователя*/ `
-<div class="row mt-4 mx-4 mb-4 bg-white px-4 py-4" id="profile-container">
+<div class="row mt-4 mx-4 mb-4 bg-white px-4 py-4" id="profile-container" style="min-height: 90vh; display: none">
 <div class="col-12 col-md-3">
   <img class="card-img-top profile-avatar" src="..." alt="..." id="avatarImage">
 </div>

@@ -60,11 +60,14 @@ export async function showDetails(filmId) {
             }
         })
     }
+    setTimeout(() => $("#poster").show(1000), 300);
+    $(".film-details").show(300);
 
-    showReviews(film?.reviews, filmId);
+    setTimeout(() => showReviews(film?.reviews, filmId), 300);
 }
 
 export function showReviews(reviewsObject, filmId) {
+    $("#reviewSectionHeading").removeClass("d-none");
     let reviews = Array.from(reviewsObject);
     let hasReview = false;
 

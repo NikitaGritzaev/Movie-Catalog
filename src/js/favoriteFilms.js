@@ -43,11 +43,10 @@ export async function showFavoriteFilms() {
     let request = await getFavoriteFilms();
     let films = request.movies;
     let movieContainer = $("#films-container");
-    if (!films.length) movieContainer.html("<h3>У Вас ещё нет избранных фильмов!</h3>");
+    if (!films.length) movieContainer.replaceWith(`<h3 class="mx-4 my-4">У Вас ещё нет избранных фильмов!</h3>`);
 
     films.forEach((currentMovie) => {
         let newFilm = $(favoriteFilmItem());
-        console.log(newFilm);
         newFilm.find(".card-title a").text(currentMovie.name);
         newFilm.find(".card-title a").attr("href", `/movie/${currentMovie.id}`);
         newFilm.find("img").attr("src", currentMovie.poster);
@@ -74,8 +73,17 @@ export async function showFavoriteFilms() {
                 removeBtn.removeClass("btn-danger");
                 removeBtn.addClass("btn-success");
                 removeBtn.text("Удалено!");
+                let filmCard = removeBtn.parent().parent().parent();
+                setTimeout(() => filmCard.hide(1000), 1000);
+                setTimeout(() => {
+                    filmCard.remove();
+                    if (!$(".film").length) {
+                        movieContainer.replaceWith(`<h3 class="mx-4 my-4">У Вас ещё нет избранных фильмов!</h3>`);
+                    }
+                }, 2000); 
             }
         });
         movieContainer.append(newFilm);
     })
+    $(".card").slideDown("normal");
 }
