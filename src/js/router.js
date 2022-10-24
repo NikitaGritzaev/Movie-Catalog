@@ -53,11 +53,13 @@ let routerFunctions = {
 
     login: function () {
         $("main").html(login());
+        $(".log").fadeIn(1000);
         $("#loginBtn").on("click", () => loginUser());
     },
 
     register: function () {
         $("main").html(register());
+        $(".reg").fadeIn(1000);
         $("#signUpBtn").on("click", () => registerUser());
         let checkConfirm = () => {
             let pass = $("#password").val();

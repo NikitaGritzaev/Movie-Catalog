@@ -1,10 +1,10 @@
 export default () => /*детали фильма*/ ` 
 <div class="row mt-4 mx-4 mb-4 bg-white px-4 py-4" id="film-container">
     <div class="col-12 col-md-3">
-        <img class="card-img-top h-100" src="" alt="" id="poster">
+        <img class="card-img-top h-100" src="" alt="" id="poster" style="display: none">
     </div>
 
-    <div class="col-12 col-md-9">
+    <div class="col-12 col-md-9 film-details" style="display: none">
         <h1 id="name"></h1>
         <p id="about"></p>
         <button type="button" class="btn btn-outline-primary d-none" id="toggleFavorite">Добавить в избранное +</button>
@@ -48,6 +48,6 @@ export default () => /*детали фильма*/ `
             </div>
         </div>
     </div>
-    <h3 class="mt-5" id="reviewSectionHeading">Отзывы и оценки</h3>
+    <h3 class="mt-5 d-none" id="reviewSectionHeading">Отзывы и оценки</h3>
 </div>
 `;

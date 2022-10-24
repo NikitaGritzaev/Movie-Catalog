@@ -1,5 +1,5 @@
 export default () => /*форма регистрации*/ `
-<div class="card p-0 mx-auto my-4" style="width: 85%; font-weight: bold;">
+<div class="card p-0 mx-auto my-4 reg" style="width: 85%; font-weight: bold; display: none">
     <div class="card-body">
         <form>
             <div class="row">
