@@ -26,7 +26,9 @@ let router = {
             let args = path.match(this.routes[i].pattern);
             if (args) {
                 $("main").empty();
-                routerFunctions[this.routes[i].callback].apply(this, args.slice(1));
+                if (!routerFunctions[this.routes[i].callback].apply(this, args.slice(1))) {
+                    return;
+                };
                 history.pushState({}, null, path);
                 break;
             }
@@ -41,6 +43,11 @@ let router = {
                 if (window.location.pathname != url.pathname) router.dispatch(url.pathname);
             }
         });
+    },
+
+    checkLogin: function () {
+        let user = localStorage.getItem("user");
+        return (user && JSON.parse(user).auth);
     }
 }
 
@@ -49,14 +56,25 @@ let routerFunctions = {
         if (!page) page = 1;
         $("main").html(filmsContainer());
         showFilms(page);
+        return true;
     },
 
     login: function () {
+        if (router.checkLogin()) {
+            router.dispatch("/1");
+            return false;
+        }
+        
         $("main").html(login());
         $("#loginBtn").on("click", () => loginUser());
+        return true;
     },
 
     register: function () {
+        if (router.checkLogin()) {
+            router.dispatch("/1");
+            return false;
+        }
         $("main").html(register());
         $("#signUpBtn").on("click", () => registerUser());
         let checkConfirm = () => {
@@ -68,22 +86,34 @@ let routerFunctions = {
         }
         $("#passwordConfirm").on("change", checkConfirm);
         $("#password").on("change", checkConfirm);
+        return true;
     },
 
     favorites: function () {
+        if (!router.checkLogin()) {
+            router.dispatch("/login");
+            return false;
+        }
         $("main").html(filmsContainer());
         showFavoriteFilms();
+        return true;
     },
 
     movie: function (id) {
         $("main").html(movieDetails());
         showDetails(id);
+        return true;
     },
 
     profile: function () {
+        if (!router.checkLogin()) {
+            router.dispatch("/login");
+            return false;
+        }
         $("main").html(profile());
         showProfile();
-    }
+        return true;
+    },
 
 }
 
