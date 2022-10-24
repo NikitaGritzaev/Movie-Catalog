@@ -4,7 +4,7 @@ import filmsContainer from "/src/views/filmsContainer.js";
 import movieDetails from "/src/views/movieDetails.js";
 import profile from "/src/views/profile.js";
 
-import { loginUser } from "/src/js/auth.js";
+import { initLoginPage } from "/src/js/loginPage.js";
 import { initRegisterPage } from "/src/js/registerPage.js";
 import { showFilms } from "/src/js/loadFilms.js";
 import { showDetails } from "/src/js/movie.js";
@@ -67,8 +67,8 @@ let routerFunctions = {
         }
         
         $("main").html(login());
+        initLoginPage();
         $(".log").fadeIn(1000);
-        $("#loginBtn").on("click", () => loginUser($("#login").val(), $("#password").val()));
         return true;
     },
 

@@ -6,6 +6,7 @@ async function setNavbar() {
     let header = $("header");
     header.empty();
     let auth = await authUser();
+    console.log(auth);
     let nav;
     if (auth.auth)  {
         nav = $(navbar());

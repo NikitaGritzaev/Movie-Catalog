@@ -1,7 +1,7 @@
 import { registerUser } from "/src/js/auth.js";
 
 export function initRegisterPage() {
-    $("#signUpBtn").on("click", () => {
+    $("#signUpBtn").on("click", async () => {
         let log = $("#login").val();
         let pass = $("#password").val();
         let passConfirm = $("#passwordConfirm").val();
@@ -9,7 +9,32 @@ export function initRegisterPage() {
         let name = $("#fullName").val();
         let birth = $("#birthday").val();
         let sex = $("#gender").val();
-        registerUser(log, pass, passConfirm, email, name, birth, sex);
+        let blinking;
+        try {
+            if (!checkPassword() || !checkName() || !checkLogin() ||
+                !checkEmail() || !checkConfirm() || !checkBirthday()) return;
+            $("#signUpBtn").addClass("disabled");
+            $("input").prop("disabled", true);
+            $(".reg").fadeTo(100, 0.3, function() { $(this).fadeTo(500, 1.0); });
+            blinking = setInterval(function() {
+                $(".reg").fadeTo(100, 0.3, function() { $(this).fadeTo(500, 1.0); });
+            }, 2000);
+            let regAttempt = await registerUser(log, pass, passConfirm, email, name, birth, sex);
+            console.log(regAttempt);
+            if (regAttempt) location.pathname = "/";
+            else {
+                $("#regWarn").remove();
+                $("#signUpBtn").before(`<p class="text-danger" id="regWarn">Ошибка!</p>`);
+            }
+        }
+        catch {
+            alert("Ошибка соединения");
+        }
+        finally {
+            clearInterval(blinking);
+            $("#signUpBtn").removeClass("disabled");
+            $("input").prop("disabled", false);
+        }
     });
 
     let checkConfirm = () => {
@@ -20,11 +45,13 @@ export function initRegisterPage() {
             $("#passwordConfirm").after(`<p class="text-danger" id="passConfirmWarn">Пароли не совпадают</p>`);
             $("#password").addClass("is-invalid");
             $("#passwordConfirm").addClass("is-invalid");
+            return false;
         }
         else {
             $("#passConfirmWarn").remove();
             $("#password").removeClass("is-invalid");
             $("#passwordConfirm").removeClass("is-invalid");
+            return true;
         }
     }
     $("#passwordConfirm").on("change", checkConfirm);
@@ -40,10 +67,12 @@ export function initRegisterPage() {
             let text = lengthCheck ? "Недопустимые символы" : "Длина пароля от 8 до 64 симв.";
             $("#passWarn").remove();
             $("#password").after(`<p class="text-danger" id="passWarn">${text}</p>`);
+            return false;
         }
         else {
             $("#password").removeClass("is-invalid");
             $("#passWarn").remove();
+            return true;
         }
     }
     $("#password").on("change", checkPassword);
@@ -58,10 +87,12 @@ export function initRegisterPage() {
             let text = lengthCheck ? "Недопустимые символы" : "Длина логина от 2 до 32 симв.";
             $("#loginWarn").remove();
             $("#login").after(`<p class="text-danger" id="loginWarn">${text}</p>`);
+            return false;
         }
         else {
             $("#login").removeClass("is-invalid");
             $("#loginWarn").remove();
+            return true;
         }
     }
     $("#login").on("change", checkLogin);
@@ -76,10 +107,12 @@ export function initRegisterPage() {
             let text = lengthCheck ? "Недопустимые символы" : "Длина имени от 4 до 64 симв.";
             $("#nameWarn").remove();
             $("#fullName").after(`<p class="text-danger" id="nameWarn">${text}</p>`);
+            return false;
         }
         else {
             $("#fullName").removeClass("is-invalid");
             $("#nameWarn").remove();
+            return true;
         }
     }
     $("#fullName").on("change", checkName);
@@ -91,10 +124,12 @@ export function initRegisterPage() {
             let text = "Некорректный email";
             $("#emailWarn").remove();
             $("#email").after(`<p class="text-danger" id="emailWarn">${text}</p>`);
+            return false;
         }
         else {
             $("#email").removeClass("is-invalid");
             $("#emailWarn").remove();
+            return true;
         }
     }
     $("#email").on("change", checkEmail);
@@ -105,10 +140,12 @@ export function initRegisterPage() {
             $("#birthday").addClass("is-invalid");
             $("#birthdayWarn").remove();
             $("#birthday").after(`<p class="text-danger" id="birthdayWarn">Некорректная дата</p>`);
+            return false;
         }
         else {
             $("#birthday").removeClass("is-invalid");
             $("#birthdayWarn").remove();
+            return true;
         }
     }
     $("#birthday").on("change", checkBirthday);

@@ -1,8 +1,8 @@
 export async function authUser() {
     let token = localStorage.getItem("jwt");
     let guest = { auth: false, user: {} };
-    if (!token) return guest;
     try {
+        if (!token) throw new Error();
         let response = await fetch(`${api_url}/account/profile`, {
             headers: {
                 "Content-Type": "application/json",
@@ -10,18 +10,20 @@ export async function authUser() {
                 "Authorization": `Bearer ${token}`
             }
         });
-        let json = await response.json();
-
-        let user = {
-            auth: true,
-            user: json
-        };
-        localStorage.setItem("user", JSON.stringify(user))
-        return user;
+        if (response.ok) {
+            let json = await response.json();
+            let user = {
+                auth: true,
+                user: json
+            };
+            localStorage.setItem("user", JSON.stringify(user))
+            return user;
+        }
+        else throw new Error();
     }
-    catch {
+    catch(err) {
         localStorage.removeItem("jwt");
-        localStorage.setItem("user", JSON.stringify(user))
+        localStorage.setItem("user", JSON.stringify(guest));
         return guest;
     }
 }
@@ -51,37 +53,30 @@ export async function logoutUser() {
 }
 
 export async function loginUser(login, password) {
-    try {
-        if (login.length < 2 ||
-            login.length > 32 ||
-            !login.match(/^[a-zA-Z0-9\-_]+$/) ||
-            password.length < 8 ||
-            password.length > 64 ||
-            !password.match(/^[a-zA-Z0-9\-_!@#№$%^&?*+=(){}[\]<>~]+$/)) return;
+    if (login.length < 2 ||
+        login.length > 32 ||
+        !login.match(/^[a-zA-Z0-9\-_]+$/) ||
+        password.length < 8 ||
+        password.length > 64 ||
+        !password.match(/^[a-zA-Z0-9\-_!@#№$%^&?*+=(){}[\]<>~]+$/)) return false;
 
-        let response = await fetch(`${api_url}/account/login`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "*/*"
-            },
-            body: JSON.stringify({
-                "username": login,
-                "password": password
-            })
-        });
-        if (response.ok) {
-            let json = await response.json();
-            localStorage.setItem("jwt", json.token);
-            location.pathname = "/";
-        }
-        else {
-            $("#warn").removeClass("d-none");
-        }
+    let response = await fetch(`${api_url}/account/login`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "*/*"
+        },
+        body: JSON.stringify({
+            "username": login,
+            "password": password
+        })
+    });
+    if (response.ok) {
+        let json = await response.json();
+        localStorage.setItem("jwt", json.token);
+        return true;
     }
-    catch (err) {
-        alert("Ошибка входа");
-    }
+    return false;
 }
 
 export async function registerUser(log, pass, passConfirm, email, name, birth, sex) {
