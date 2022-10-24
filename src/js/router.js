@@ -3,6 +3,7 @@ import register from "/src/views/register.js";
 import filmsContainer from "/src/views/filmsContainer.js";
 import movieDetails from "/src/views/movieDetails.js";
 import profile from "/src/views/profile.js";
+import emptyPage from "/src/views/404.js";
 
 import { initLoginPage } from "/src/js/loginPage.js";
 import { initRegisterPage } from "/src/js/registerPage.js";
@@ -31,8 +32,9 @@ let router = {
                     return;
                 };
                 history.pushState({}, null, path);
-                break;
+                return;
             }
+            routerFunctions["default"]();
         }
     },
 
@@ -53,6 +55,10 @@ let router = {
 }
 
 let routerFunctions = {
+    default: function() {
+        $("main").html(emptyPage());
+    },
+
     catalog: function (page = 1) {
         if (!page) page = 1;
         $("main").html(filmsContainer());

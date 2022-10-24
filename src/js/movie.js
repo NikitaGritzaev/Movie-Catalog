@@ -16,6 +16,7 @@ export async function getMovieDetails(filmId) {
 
 export async function showDetails(filmId) {
     let film = await getMovieDetails(filmId);
+    if (jQuery.isEmptyObject(film)) location.href = "/1";
 
     if (film.name && film.year) $("#name").text(`${film.name} (${film.year})`);
     if (film.time) $("#time").text(`${film.time} мин.`);
