@@ -95,8 +95,8 @@ export async function initProfilePage() {
                 $("#editProfileBtn").before(`<p class="text-danger" id="editWarn">Ошибка!</p>`);
             }
         }
-        catch {
-            alert("Ошибка соединения");
+        catch(err) {
+            console.log(err)
         }
         finally {
             clearInterval(blinking);
