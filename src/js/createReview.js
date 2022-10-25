@@ -1,10 +1,9 @@
 export async function createReview(movieId, edit = false, reviewId = "0") {
     let token = localStorage.getItem("jwt");
     if (!token) return false;
-    let isAnonymous = $("#newReviewAnonymous").val();
+    let isAnonymous = $("#newReviewAnonymous").is(":checked");
     let reviewText = $("#newReviewText").val();
     let reviewRating = $("#newReviewRating").val();
-
     let full_api = edit ? `${api_url}/movie/${movieId}/review/${reviewId}/edit` :
         `${api_url}/movie/${movieId}/review/add`;
     try {
@@ -18,7 +17,7 @@ export async function createReview(movieId, edit = false, reviewId = "0") {
             body: JSON.stringify({
                 "reviewText": reviewText,
                 "rating": parseInt(reviewRating),
-                "isAnonymous": isAnonymous == "on" ? true : false
+                "isAnonymous": isAnonymous
             })
         });
         return response.ok;

@@ -89,6 +89,11 @@ export function showReviews(reviewsObject, filmId) {
         $("#film-container").append(addReview());
         $("#newReviewForm").show(1000);
         $("#saveReview").on("click", async () => {
+            if (!$("#newReviewText").val().length) {
+                $("#emptyWarn").remove();
+                $("#saveReview").before(`<p class="text-danger" id="emptyWarn">Пустой отзыв!</p>`);
+                return;
+            }
             let create = await createReview(filmId);
             if (create) {
                 location.reload();
@@ -142,15 +147,27 @@ export function showReviews(reviewsObject, filmId) {
             reviewTemplate.addClass("my-review");
             reviewTemplate.find("#deleteReviewBtn").on("click", async () => {
                 let deleteReviewStatus = await deleteReview(filmId, reviews[i].id);
-                if (deleteReviewStatus) location.reload();
+                if (deleteReviewStatus) {
+                    setTimeout(() => location.reload(), 1000);
+                    reviewTemplate.hide(1000);
+                    $("#saveReview").addClass("disabled");
+                    $("#newReviewForm").hide(1000);
+                }
             })
             reviewTemplate.find("#editReviewBtn").one("click", () => {
+                $("#editReviewBtn").addClass("disabled");
                 $("#reviewSectionHeading").after(addReview());
+                $("#newReviewForm .card-header").text("Изменить отзыв");
                 $("#newReviewForm").show(1000);
                 $("#newReviewText").val(reviews[0].reviewText);
                 $("#newReviewRating").val(reviews[0].rating);
                 if (reviews[0].isAnonymous) $("#newReviewAnonymous").prop("checked", true);
                 $("#saveReview").on("click", async () => {
+                    if (!$("#newReviewText").val().length) {
+                        $("#emptyWarn").remove();
+                        $("#saveReview").before(`<p class="text-danger" id="emptyWarn">Пустой отзыв!</p>`);
+                        return;
+                    }
                     let edit = await createReview(filmId, true, reviews[0].id);
                     if (edit) {
                         location.reload();
