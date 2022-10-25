@@ -1,5 +1,5 @@
 export default () => /*форма отзыва*/ ` 
-<div class="card p-0" id="newReviewForm">
+<div class="card p-0" id="newReviewForm" style="display: none;">
     <div class="card-header mb-2">Добавить отзыв</div>
     <form class="mx-3 my-3">
         <label for="newReviewText">Текст отзыва</label>

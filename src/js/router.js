@@ -10,7 +10,7 @@ import { initRegisterPage } from "/src/js/registerPage.js";
 import { showFilms } from "/src/js/loadFilms.js";
 import { showDetails } from "/src/js/movie.js";
 import { showFavoriteFilms } from "/src/js/favoriteFilms.js";
-import { showProfile } from "/src/js/profile.js";
+import { initProfilePage } from "/src/js/profilePage.js";
 import { setNavbar } from "/src/js/initNavbar.js";
 
 
@@ -116,7 +116,7 @@ let routerFunctions = {
             return false;
         }
         $("main").html(profile());
-        showProfile();
+        initProfilePage()
         return true;
     },
 

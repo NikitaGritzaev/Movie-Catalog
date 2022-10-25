@@ -87,6 +87,7 @@ export function showReviews(reviewsObject, filmId) {
 
     if (!hasReview && currentUser?.auth) {
         $("#film-container").append(addReview());
+        $("#newReviewForm").show(1000);
         $("#saveReview").on("click", async () => {
             let create = await createReview(filmId);
             if (create) {
@@ -145,6 +146,7 @@ export function showReviews(reviewsObject, filmId) {
             })
             reviewTemplate.find("#editReviewBtn").one("click", () => {
                 $("#reviewSectionHeading").after(addReview());
+                $("#newReviewForm").show(1000);
                 $("#newReviewText").val(reviews[0].reviewText);
                 $("#newReviewRating").val(reviews[0].rating);
                 if (reviews[0].isAnonymous) $("#newReviewAnonymous").prop("checked", true);
@@ -162,4 +164,3 @@ export function showReviews(reviewsObject, filmId) {
         $("#film-container").append(reviewTemplate);
     }
 }
-//"22158c42-001a-40a3-a2a7-08d9b9f3d2a2"

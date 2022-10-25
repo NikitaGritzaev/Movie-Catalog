@@ -13,7 +13,7 @@ export default () => /*шаблон отзыва*/ `
                 </div>
         </div>
     </div>
-    <p class="px-2 reviewText"></p>
+    <p class="px-3 reviewText"></p>
     <div class="card-footer reviewAuthorOptions">
         <button type="button" class="btn btn-warning my-1" id="editReviewBtn">Редактировать</button>
         <button type="button" class="btn btn-danger my-1" id="deleteReviewBtn">Удалить</button>

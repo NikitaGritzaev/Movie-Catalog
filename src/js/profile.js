@@ -12,36 +12,26 @@ export async function getProfileDetails() {
     return json;
 }
 
-export async function showProfile() {
-    let details = await getProfileDetails();
-    $("#email").val(details.email);
-    $("#avatarLink").val(details.avatarLink);
-    if (details.avatarLink) $("#avatarImage").prop("src", details.avatarLink);
-    else $("#avatarImage").prop("src", "/img/user-avatar.png");
-    $("#fullName").val(details.name);
-    $("#birthday").val(details.birthDate.slice(0,10));
-    if (details.gender) $("#gender").val("Женский")
-    else $("#gender").val("Мужской");
-    $("#editProfileBtn").on("click", async () => {
-        let chng = await changeProfile();
-    })
-    $("#profile-container").show(700);
-}
-
-export async function changeProfile() {
+export async function changeProfile(email, avatarLink, name, birth, sex) {
     let token = localStorage.getItem("jwt");
     let user = localStorage.getItem("user");
     if (!token) return false;
 
-    let email = $("#email").val();
-    let avatarLink = $("#avatarLink").val();
-    let name = $("#fullName").val();
-    let birth = $("#birthday").val();
-    let sex = $("#gender").val();
+    if (name.length < 4 ||
+        name.length > 64 ||
+        !name.match(/^[а-яА-ЯёЁa-zA-Z0-9\-_ ]+$/) ||
+        !email.match(/^\S+@\S+\.\S+$/) ||
+        !email.match(/^\S+@\S+\.\S+$/) ||
+        date > Date.now() ||
+        date < new Date("1900-01-01")) return false;
 
-    if (!email.match(/^\S+@\S+\.\S+$/) ||
-        name.length < 2 ||
-        birth > Date.now()) return false;
+    try {
+        await checkImage(avatarLink);
+    }
+    catch {
+        avatarLink = null;
+    }
+    
     try {
         let response = await fetch(`${api_url}/account/profile`, {
             method: "PUT",
@@ -57,13 +47,22 @@ export async function changeProfile() {
                 "avatarLink": avatarLink,
                 "name": name,
                 "birthDate": `${birth}T00:00:00.000Z`,
-                "gender": sex == "Мужской" ? 0 : 1
+                "gender": sex == "Мужской" ? 1 : 0
             })
         });
-        if (response.ok) {
-            location.reload();
-        }
-    } catch {
-        alert("Ошибка")
+        return response.ok;
+    } 
+    catch {
+        return false;
     }
+}
+
+export function checkImage(url) {
+    return new Promise(function (resolve, reject) {
+        if (!url) reject(false);
+        let testImage = $("<img>").attr("src", url);
+        testImage.on("load", () => resolve(true));
+        testImage.on("error", () => reject(false));
+    })
+    
 }

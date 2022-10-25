@@ -1,7 +1,7 @@
 export default () => /*профиль пользователя*/ `
 <div class="row mt-4 mx-4 mb-4 bg-white px-4 py-4" id="profile-container" style="min-height: 90vh; display: none">
 <div class="col-12 col-md-3">
-  <img class="card-img-top profile-avatar" src="..." alt="..." id="avatarImage">
+  <img class="card-img-top profile-avatar border" src="..." alt="..." id="avatarImage">
 </div>
 
 <div class="col-12 col-md-9 bold">
@@ -26,7 +26,7 @@ export default () => /*профиль пользователя*/ `
 
       <div class="col-12">
         <label for="birthday">Дата рождения</label>
-        <input type="date" class="form-control my-2" id="birthday">
+        <input type="date" class="form-control my-2" id="birthday" min="1900-01-01">
       </div>
 
       <div class="col-12">
