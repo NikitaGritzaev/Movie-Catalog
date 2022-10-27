@@ -18,7 +18,7 @@ export async function initCatalogue(page) {
     if (pages.pageCount < 1) return;
     if (page > pages.pageCount) {
         history.pushState({}, null, `/${pages.pageCount}`);
-        showCatalogue(pages.pageCount);
+        initCatalogue(pages.pageCount);
         return;
     }
     $.get("/src/views/filmItem.html", function(data) {

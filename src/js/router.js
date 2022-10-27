@@ -19,15 +19,12 @@ let router = {
     ],
 
     dispatch: function (path) {
-        console.log(path);
         for (let i = 0; i < this.routes.length; ++i) {
             let args = path.match(this.routes[i].pattern);
             if (args) {
                 if (!routerFunctions[this.routes[i].callback].apply(this, args.slice(1))) {
-                    console.log(`${path}-отклонено`)
                     return;
                 };
-                console.log(`${path}-принято`)
                 $("main").empty();
                 history.pushState({}, null, path);
                 $(".me-auto a").removeClass("active");
@@ -112,7 +109,6 @@ let routerFunctions = {
 
 $(document).one("DOMContentLoaded", async function (event) {
     await router.init();
-    console.log(1);
     router.dispatch(window.location.pathname);
 });
 

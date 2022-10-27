@@ -1,17 +1,23 @@
-import navbar from "/src/views/navbar.js";
-import navbarGuest from "/src/views/navbarGuest.js";
-import {authUser, logoutUser} from "/src/js/auth.js";
+import { authUser, logoutUser } from "/src/js/auth.js";
 
-export async function setNavbar() {
-    let header = $("header");
-    header.empty();
-    let auth = await authUser();
-    let nav;
-    if (auth.auth) {
-        nav = $(navbar());
-        $(nav).find("#user").text(`Авторизован как ${auth.user.name}`);
-        $(nav).find("#logout").on("click", logoutUser);
-    }
-    else nav = $(navbarGuest());
-    header.append(nav);
+export function setNavbar() {
+    return new Promise(async (resolve, reject) => {
+        let header = $("header");
+        header.empty();
+        let auth = await authUser();
+        if (auth.auth) {
+            $.get("/src/views/navbar.html", function (data) {
+                header.html(data);
+                header.find("#user").text(`Авторизован как ${auth.user.name}`);
+                header.find("#logout").on("click", logoutUser);
+                resolve(true);
+            });
+        }
+        else {
+            $.get("/src/views/navbarGuest.html", function (data) {
+                header.html(data);
+                resolve(true);
+            });
+        }
+    });
 }
