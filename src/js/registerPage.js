@@ -1,6 +1,7 @@
 import { registerUser } from "/src/js/auth.js";
 
 export function initRegisterPage() {
+    $(".reg").fadeOut(0).fadeIn(1000);
     $("#signUpBtn").on("click", async () => {
         let log = $("#login").val();
         let pass = $("#password").val();

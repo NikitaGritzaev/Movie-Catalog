@@ -1,5 +1,5 @@
 import review from "/src/views/review.js";
-import addReview from "/src/views/addReview.js";
+import addReview from "/src/views/addReview.js";//
 
 import { createReview, deleteReview } from "/src/js/createReview.js";
 import { favorite, getFavoriteFilms } from "/src/js/favoriteFilms.js";

@@ -7,7 +7,7 @@ export async function setNavbar() {
     header.empty();
     let auth = await authUser();
     let nav;
-    if (auth.auth)  {
+    if (auth.auth) {
         nav = $(navbar());
         $(nav).find("#user").text(`Авторизован как ${auth.user.name}`);
         $(nav).find("#logout").on("click", logoutUser);

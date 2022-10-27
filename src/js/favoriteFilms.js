@@ -1,4 +1,4 @@
-import favoriteFilmItem from "/src/views/favoriteFilmItem.js";
+import { filmSetup } from "/src/js/filmSetup.js"
 
 export async function favorite(movieId, deleteFavorite = false) {
     let token = localStorage.getItem("jwt");
@@ -39,32 +39,19 @@ export async function getFavoriteFilms() {
     }
 }
 
-export async function showFavoriteFilms() {
+export async function initFavoritesPage() {
     let request = await getFavoriteFilms();
     let films = request.movies;
+    if (!films.length) $("#films-container").replaceWith(`<h3 class="mx-4 my-4">У Вас ещё нет избранных фильмов!</h3>`);
+    $.get("/src/views/favoriteFilmItem.html", function(data) {
+        showFavoriteFilms(films, data);
+    });
+}
+
+async function showFavoriteFilms(films, filmTemplate) {
     let movieContainer = $("#films-container");
-    if (!films.length) movieContainer.replaceWith(`<h3 class="mx-4 my-4">У Вас ещё нет избранных фильмов!</h3>`);
-
     films.forEach((currentMovie) => {
-        let newFilm = $(favoriteFilmItem());
-        newFilm.find(".card-title a").text(currentMovie.name);
-        newFilm.find(".card-title a").attr("href", `/movie/${currentMovie.id}`);
-        newFilm.find("img").attr("src", currentMovie.poster);
-        newFilm.find(".year").text(currentMovie.year);
-        let genres = currentMovie.genres.reduce((previousValue, currentValue) =>
-        previousValue + ", " + currentValue.name
-        , "").slice(2);
-        newFilm.find(".country-genre").text(`${currentMovie.country} • ${genres}`);
-
-        let badgeRating = newFilm.find(".badge");
-        if (currentMovie.reviews.length) {
-            badgeRating.text("Средняя оценка - " + (currentMovie.reviews.reduce((previousValue, currentValue) =>
-                previousValue + currentValue.rating
-                , 0) / currentMovie.reviews.length).toFixed(1));
-        }
-        else {
-            badgeRating.text("Ещё нет оценок");
-        }
+        let newFilm = filmSetup($(filmTemplate), currentMovie);
 
         let removeBtn = newFilm.find(".deleteFavorite");
         removeBtn.one("click", async () => {
@@ -85,5 +72,5 @@ export async function showFavoriteFilms() {
         });
         movieContainer.append(newFilm);
     })
-    $(".card").slideDown("normal");
+    $(".card").fadeOut(0).slideDown("normal");
 }

@@ -1,5 +1,6 @@
 import { loginUser } from "/src/js/auth.js";
 export function initLoginPage() {
+    $(".log").fadeOut(0).fadeIn(1000);
     $("#loginBtn").on("click", async () => {
         if (!checkPassword() || !checkLogin()) return;
         $("#login").prop("disabled", true);
@@ -12,7 +13,7 @@ export function initLoginPage() {
                 $('.log').fadeTo(100, 0.3, function() { $(this).fadeTo(500, 1.0); });
             }, 2000);
             let loginAttempt = await loginUser($("#login").val(), $("#password").val());
-            if (loginAttempt) location.pathname = "/";
+            if (loginAttempt) location.pathname = "/1";
             else {
                 $("#authWarn").remove();
                 $("#loginBtn").before(`<p class="text-danger" id="authWarn">Неверные данные!</p>`);

@@ -1,15 +1,8 @@
-import login from "/src/views/login.js";
-import register from "/src/views/register.js";
-import filmsContainer from "/src/views/filmsContainer.js";
-import movieDetails from "/src/views/movieDetails.js";
-import profile from "/src/views/profile.js";
-import emptyPage from "/src/views/404.js";
-
 import { initLoginPage } from "/src/js/loginPage.js";
 import { initRegisterPage } from "/src/js/registerPage.js";
-import { showFilms } from "/src/js/loadFilms.js";
+import { initCatalogue } from "/src/js/loadFilms.js";
 import { showDetails } from "/src/js/movie.js";
-import { showFavoriteFilms } from "/src/js/favoriteFilms.js";
+import { initFavoritesPage } from "/src/js/favoriteFilms.js";
 import { initProfilePage } from "/src/js/profilePage.js";
 import { setNavbar } from "/src/js/initNavbar.js";
 
@@ -26,20 +19,23 @@ let router = {
     ],
 
     dispatch: function (path) {
+        console.log(path);
         for (let i = 0; i < this.routes.length; ++i) {
             let args = path.match(this.routes[i].pattern);
             if (args) {
-                $("main").empty();
                 if (!routerFunctions[this.routes[i].callback].apply(this, args.slice(1))) {
+                    console.log(`${path}-отклонено`)
                     return;
                 };
+                console.log(`${path}-принято`)
+                $("main").empty();
                 history.pushState({}, null, path);
                 $(".me-auto a").removeClass("active");
                 this.routes[i].nav.forEach(val => $(`#${val}`).addClass("active"));
                 return;
             }
-            routerFunctions["default"]();
         }
+        routerFunctions["default"]();
     },
 
     init: async function () {
@@ -61,69 +57,62 @@ let router = {
 
 let routerFunctions = {
     default: function() {
-        $("main").html(emptyPage());
+        $("main").load("/src/views/404.html");
     },
 
-    catalog: function (page = 1) {
+    catalog: function(page = 1) {
         if (!page) page = 1;
-        $("main").html(filmsContainer());
-        showFilms(page);
+        $("main").load("/src/views/filmsContainer.html", () => initCatalogue(page));
         return true;
     },
 
-    login: function () {
+    login: function() {
         if (router.checkLogin()) {
             router.dispatch("/1");
             return false;
         }
         
-        $("main").html(login());
-        initLoginPage();
-        $(".log").fadeIn(1000);
+        $("main").load("/src/views/login.html", () => initLoginPage());
         return true;
     },
 
-    register: function () {
+    register: function() {
         if (router.checkLogin()) {
             router.dispatch("/1");
             return false;
         }
-        $("main").html(register());
-        $(".reg").fadeIn(1000);
-        initRegisterPage();
+        $("main").load("/src/views/register.html", () => initRegisterPage());
         return true;
     },
 
-    favorites: function () {
+    favorites: function() {
         if (!router.checkLogin()) {
             router.dispatch("/login");
             return false;
         }
-        $("main").html(filmsContainer());
-        showFavoriteFilms();
+        $("main").load("/src/views/filmsContainer.html", () => initFavoritesPage());
         return true;
     },
 
-    movie: function (id) {
-        $("main").html(movieDetails());
-        showDetails(id);
+    movie: function(id) {
+        $("main").load("/src/views/movieDetails.html", () => showDetails(id));
         return true;
     },
 
-    profile: function () {
+    profile: function() {
         if (!router.checkLogin()) {
             router.dispatch("/login");
             return false;
         }
-        $("main").html(profile());
-        initProfilePage()
+        $("main").load("/src/views/profile.html", () => initProfilePage());
         return true;
     },
 
 }
 
-$(document).on("DOMContentLoaded", async function (event) {
+$(document).one("DOMContentLoaded", async function (event) {
     await router.init();
+    console.log(1);
     router.dispatch(window.location.pathname);
 });
 
