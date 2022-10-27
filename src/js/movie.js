@@ -1,6 +1,3 @@
-import review from "/src/views/review.js";
-import addReview from "/src/views/addReview.js";//
-
 import { createReview, deleteReview } from "/src/js/createReview.js";
 import { favorite, getFavoriteFilms } from "/src/js/favoriteFilms.js";
 
@@ -64,10 +61,14 @@ export async function showDetails(filmId) {
     setTimeout(() => $("#poster").show(1000), 300);
     $(".film-details").show(300);
 
-    setTimeout(() => showReviews(film?.reviews, filmId), 300);
+    $.get("/src/views/addReview.html", function(addReviewTemplate) {
+        $.get("/src/views/review.html", function(reviewTemplate) {
+            setTimeout(() => showReviews(film?.reviews, filmId, reviewTemplate, addReviewTemplate), 300);
+        })
+    });
 }
 
-export function showReviews(reviewsObject, filmId) {
+function showReviews(reviewsObject, filmId, review, addReview) {
     $("#reviewSectionHeading").removeClass("d-none");
     let reviews = Array.from(reviewsObject);
     let hasReview = false;
@@ -86,7 +87,7 @@ export function showReviews(reviewsObject, filmId) {
     }
 
     if (!hasReview && currentUser?.auth) {
-        $("#film-container").append(addReview());
+        $("#film-container").append(addReview);
         $("#newReviewForm").show(1000);
         $("#saveReview").on("click", async () => {
             if (!$("#newReviewText").val().length) {
@@ -108,7 +109,7 @@ export function showReviews(reviewsObject, filmId) {
     if (!reviews.length) $("#film-container").append("<p>Отзывов ещё нет!</p>");
 
     for (let i in reviews) {
-        let reviewTemplate = $(review());
+        let reviewTemplate = $(review);
         reviewTemplate.find(".reviewText").text(reviews[i].reviewText);
         reviewTemplate.find(".reviewDate").text(`Дата отзыва: ${reviews[i].createDateTime.slice(0, 10)}`);
 
@@ -156,7 +157,7 @@ export function showReviews(reviewsObject, filmId) {
             })
             reviewTemplate.find("#editReviewBtn").one("click", () => {
                 $("#editReviewBtn").addClass("disabled");
-                $("#reviewSectionHeading").after(addReview());
+                $("#reviewSectionHeading").after(addReview);
                 $("#newReviewForm .card-header").text("Изменить отзыв");
                 $("#newReviewForm").show(1000);
                 $("#newReviewText").val(reviews[0].reviewText);
