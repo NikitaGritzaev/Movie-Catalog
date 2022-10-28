@@ -1,7 +1,7 @@
 import { authUser, logoutUser } from "/src/js/auth.js";
 
 export function setNavbar() {
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve) => {
         let header = $("header");
         header.empty();
         let auth = await authUser();

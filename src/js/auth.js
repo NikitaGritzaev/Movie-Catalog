@@ -19,7 +19,7 @@ export async function authUser() {
             localStorage.setItem("user", JSON.stringify(user))
             return user;
         }
-        else throw new Error();
+        return guest;
     }
     catch(err) {
         localStorage.removeItem("jwt");
@@ -28,7 +28,7 @@ export async function authUser() {
     }
 }
 
-export async function logoutUser() {
+export async function logoutUser(resume = true) {
     let token = localStorage.getItem("jwt");
     localStorage.removeItem("jwt");
     let user = {
@@ -38,6 +38,7 @@ export async function logoutUser() {
     localStorage.setItem("user", JSON.stringify(user));
     if (!token) return;
     try {
+        if (!resume) throw new Error();
         await fetch(`${api_url}/account/logout`, {
             method: "POST",
             headers: {
