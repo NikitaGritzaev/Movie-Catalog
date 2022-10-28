@@ -17,7 +17,7 @@ window.fetch = new Proxy(window.fetch, { //для отлова 401
             if (data.status == 401) {
                 localStorage.removeItem("jwt");
                 localStorage.removeItem("user");
-                location.href = "/login";
+                if (window.location.pathname != "/login") location.href = "/login";
             }
         });
         return response;
