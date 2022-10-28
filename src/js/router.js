@@ -18,7 +18,7 @@ let router = {
         { pattern: /^\/([0-9]*)$/, callback: "catalog", nav: ["moviesLink"] }
     ],
 
-    dispatch: function (path) {
+    dispatch: function (path, pushHistory = true) {
         for (let i = 0; i < this.routes.length; ++i) {
             let args = path.match(this.routes[i].pattern);
             if (args) {
@@ -26,7 +26,7 @@ let router = {
                     return;
                 };
                 $("main").empty();
-                history.pushState({}, null, path);
+                if (pushHistory) history.pushState({}, null, path);
                 $(".me-auto a").removeClass("active");
                 this.routes[i].nav.forEach(val => $(`#${val}`).addClass("active"));
                 return;
@@ -107,10 +107,13 @@ let routerFunctions = {
 
 }
 
-$(document).one("DOMContentLoaded", async function (event) {
+$(document).one("DOMContentLoaded", async function() {
     await router.init();
     router.dispatch(window.location.pathname);
 });
 
+$(window).on("popstate", function() {
+    router.dispatch(window.location.pathname, false);
+})
 
 
