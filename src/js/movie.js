@@ -78,7 +78,7 @@ function showReviews(reviewsObject, filmId, review, addReview) {
         for (let i = 0; i < reviews.length; ++i) {
             if (reviews[i].author && reviews[i].author.userId == currentUser.user.id) {
                 reviews.unshift(reviews.splice(i, 1)[0]);
-                reviews[0].author.nickName += " (Ваш отзыв)";
+                reviews[0].author.nickName += reviews[0].isAnonymous ? " (Ваш отзыв, анонимно)" : " (Ваш отзыв)";
                 reviews[0].flag = true;
                 hasReview = true;
                 break;
