@@ -58,8 +58,8 @@ export async function showDetails(filmId) {
             }
         })
     }
-    setTimeout(() => $("#poster").show(1000), 300);
-    $(".film-details").show(300);
+    setTimeout(() => $.appear("#poster"), 300);
+    $.appear(".film-details", 300);
 
     $.get("/src/views/addReview.html", function(addReviewTemplate) {
         $.get("/src/views/review.html", function(reviewTemplate) {

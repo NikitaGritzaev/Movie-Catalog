@@ -6,6 +6,10 @@ $(document).keypress(function(e){
     }
 });
 
+$.appear = function(selector, time = 1000) { //для работы с bootstrap5 d-none
+    $(selector).removeClass("d-none").fadeOut(0).show(time);
+}
+
 
 
 

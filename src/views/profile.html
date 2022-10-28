@@ -1,4 +1,4 @@
-<div class="row mt-4 mx-4 mb-4 bg-white px-4 py-4" id="profile-container" style="min-height: 90vh; display: none">
+<div class="row mt-4 mx-4 mb-4 bg-white px-4 py-4 d-none" id="profile-container" style="min-height: 90vh">
 <div class="col-12 col-md-4 col-lg-5 col-xl-3">
   <img class="card-img-top profile-avatar border mh-100" src="..." alt="..." id="avatarImage">
 </div>
@@ -9,28 +9,28 @@
     <div class="row">
       <div class="col-12">
         <label for="email">Email</label>
-        <input type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" class="form-control my-2" id="email"
-          placeholder="Введите email">
+        <input type="email" class="form-control my-2" id="email"
+          placeholder="Введите email" disabled>
       </div>
 
       <div class="col-12">
         <label for="avatarLink">Ссылка на аватар</label>
-        <input type="text" class="form-control my-2" id="avatarLink" placeholder="Укажите ссылку на аватар">
+        <input type="text" class="form-control my-2" id="avatarLink" placeholder="Укажите ссылку на аватар" disabled>
       </div>
 
       <div class="col-12">
         <label for="fullName">ФИО</label>
-        <input type="text" class="form-control my-2" id="fullName" placeholder="Введите ФИО">
+        <input type="text" class="form-control my-2" id="fullName" placeholder="Введите ФИО" disabled>
       </div>
 
       <div class="col-12">
         <label for="birthday">Дата рождения</label>
-        <input type="date" class="form-control my-2" id="birthday" min="1900-01-01">
+        <input type="date" class="form-control my-2" id="birthday" min="1900-01-01" disabled>
       </div>
 
       <div class="col-12">
         <label for="gender">Укажите пол</label>
-        <select id="gender" class="form-select my-2">
+        <select id="gender" class="form-select my-2" disabled>
           <option>Мужской</option>
           <option>Женский</option>
         </select>
@@ -38,7 +38,7 @@
 
 
       <div>
-        <button type="button" class="btn btn-warning my-2" id="editProfileBtn">Сохранить</button>
+        <button type="button" class="btn btn-warning my-2" id="editProfileBtn">Редактировать</button>
       </div>
 
     </div>

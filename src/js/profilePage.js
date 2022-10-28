@@ -71,8 +71,8 @@ export async function initProfilePage() {
     $("#birthday").val(details.birthDate.slice(0, 10));
     if (details.gender) $("#gender").val("Мужской")
     else $("#gender").val("Женский");
-    $("#editProfileBtn").on("click", async () => {
 
+    let saveProfile = async () => {
         let email = $("#email").val();
         let avatarLink = $("#avatarLink").val();
         let name = $("#fullName").val();
@@ -83,7 +83,7 @@ export async function initProfilePage() {
             if (!checkName() || !checkEmail() || !checkBirthday()) return;
 
             $("#editProfileBtn").addClass("disabled");
-            $("input").prop("disabled", true);
+            $("input, select").prop("disabled", true);
             $("#profile-container").fadeTo(100, 0.3, function () { $(this).fadeTo(500, 1.0); });
             blinking = setInterval(function () {
                 $("#profile-container").fadeTo(100, 0.3, function () { $(this).fadeTo(500, 1.0); });
@@ -101,9 +101,17 @@ export async function initProfilePage() {
         finally {
             clearInterval(blinking);
             $("#editProfileBtn").removeClass("disabled");
-            $("input").prop("disabled", false);
+            $("input, select").prop("disabled", false);
 
         }
+    }
+
+    let editBtn = $("#editProfileBtn");
+    editBtn.one("click", () => {
+        $("input, select").attr("disabled", false);
+        $("#editProfileBtn").removeClass("btn-warning").addClass("btn-primary").text("Сохранить");
+        editBtn.on("click", saveProfile);
     })
-    $("#profile-container").show(700);
+    
+    $.appear("#profile-container", 700);
 }
