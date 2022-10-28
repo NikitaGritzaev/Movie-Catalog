@@ -59,11 +59,11 @@ export async function showDetails(filmId) {
         })
     }
     setTimeout(() => $.appear("#poster"), 300);
-    $.appear(".film-details", 300);
+    $(".film-details").removeClass("d-none").fadeOut(0).slideDown(1000);
 
     $.get("/src/views/addReview.html", function(addReviewTemplate) {
         $.get("/src/views/review.html", function(reviewTemplate) {
-            setTimeout(() => showReviews(film?.reviews, filmId, reviewTemplate, addReviewTemplate), 300);
+            setTimeout(() => showReviews(film?.reviews, filmId, reviewTemplate, addReviewTemplate), 1000);
         })
     });
 }
@@ -88,7 +88,7 @@ function showReviews(reviewsObject, filmId, review, addReview) {
 
     if (!hasReview && currentUser?.auth) {
         $("#film-container").append(addReview);
-        $("#newReviewForm").show(1000);
+        $.appear("#newReviewForm");
         $("#saveReview").on("click", async () => {
             if (!$("#newReviewText").val().length) {
                 $("#emptyWarn").remove();
@@ -159,7 +159,7 @@ function showReviews(reviewsObject, filmId, review, addReview) {
                 $("#editReviewBtn").addClass("disabled");
                 $("#reviewSectionHeading").after(addReview);
                 $("#newReviewForm .card-header").text("Изменить отзыв");
-                $("#newReviewForm").show(1000);
+                $.appear("#newReviewForm");
                 $("#newReviewText").val(reviews[0].reviewText);
                 $("#newReviewRating").val(reviews[0].rating);
                 if (reviews[0].isAnonymous) $("#newReviewAnonymous").prop("checked", true);
