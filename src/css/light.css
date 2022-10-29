@@ -1,0 +1,23 @@
+.bg-light .review-good {
+    border-color: #5cb85c;
+}
+
+.bg-light .review-good p {
+    color: green;
+}
+
+.bg-light .review-bad {
+    border-color: #d9534f;
+}
+
+.bg-light .review-bad p {
+    color: red;
+}
+
+.bg-light .filmItem:hover a {
+    color: #00c;
+}
+
+.bg-light ::selection {
+    background: #ffb7b7;
+}

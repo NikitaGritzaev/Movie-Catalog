@@ -5,6 +5,7 @@ import { showDetails } from "/src/js/movie.js";
 import { initFavoritesPage } from "/src/js/favoriteFilms.js";
 import { initProfilePage } from "/src/js/profilePage.js";
 import { setNavbar } from "/src/js/initNavbar.js";
+import { themeButton } from "/src/js/theme.js";
 
 
 let router = {
@@ -37,6 +38,7 @@ let router = {
 
     init: async function () {
         await setNavbar();
+        themeButton();
         $(document).on("click", function (event) {
             if (event.target.href != undefined) {
                 event.preventDefault();

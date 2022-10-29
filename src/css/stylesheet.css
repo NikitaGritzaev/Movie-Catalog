@@ -2,6 +2,10 @@
     border-bottom: 0;
 }
 
+* {
+    transition: background-color 1s;
+}
+
 .bold {
     font-weight: bold;
 }
@@ -12,42 +16,28 @@
     box-sizing: content-box;
 }
 
-.review-good {
-    border-color: #5cb85c;
-}
-
-.review-good p {
-    color: green;
-}
-
-.review-bad {
-    border-color: #d9534f;
-}
-
-.review-bad p {
-    color: red;
-}
-
 a {
     color: inherit;
     text-decoration: inherit;
-}
-
-.filmItem:hover a {
-    color: #00c;
 }
 
 .filmItem:hover {
     cursor: pointer;
 }
 
-
-
 .posterDiv {
     width: 130px;
     height: 130px;
 }
 
-::selection {
-    background: #ffb7b7;
+#themeButton {
+    position: fixed;
+    left: 95%;
+    top: 90%;
+    width: 45px;
+    height: 45px;
+}
+
+#themeButton:hover {
+    cursor: pointer;
 }

@@ -1,0 +1,64 @@
+.bg-black ::selection {
+    background: #004848;
+}
+
+body.bg-black {
+    color: white;
+}
+
+.bg-black .card,
+.bg-black #film-container,
+.bg-black #films-container,
+.bg-black #profile-container,
+.bg-black a.page-link {
+    background: #212529 !important;
+    border-color: black;
+}
+
+.bg-black input,
+.bg-black select {
+    background: black;
+    color: white;
+}
+
+.bg-black input:focus,
+.bg-black select:focus,
+.bg-black input:disabled,
+.bg-black select:disabled {
+    background: #212529;
+    color: white;
+}
+
+
+.bg-black .bg-primary,
+.bg-black .btn-primary {
+    background: #198754;
+    border-color: #198754;
+}
+
+.bg-black .bg-secondary,
+.bg-black .btn-secondary,
+.bg-black .btn-warning {
+    background: #0d6efd;
+    border-color: #0d6efd;
+}
+
+.bg-black .review-good {
+    border-color: #4bfd4b;
+}
+
+.bg-black .review-good p {
+    color: green;
+}
+
+.bg-black .review-bad {
+    border-color: #ff0800;
+}
+
+.bg-black .review-bad p {
+    color: red;
+}
+
+.bg-black .filmItem:hover a {
+    color: #ff3;
+}
