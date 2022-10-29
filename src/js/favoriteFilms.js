@@ -64,7 +64,7 @@ async function showFavoriteFilms(films, filmTemplate) {
                 setTimeout(() => filmCard.hide(1000), 1000);
                 setTimeout(() => {
                     filmCard.remove();
-                    if (!$(".film").length) {
+                    if (!$(".filmItem").length) {
                         movieContainer.replaceWith(`<h3 class="mx-4 my-4">У Вас ещё нет избранных фильмов!</h3>`);
                     }
                 }, 2000); 
