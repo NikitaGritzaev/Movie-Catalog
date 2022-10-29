@@ -31,6 +31,7 @@ a {
 }
 
 #themeButton {
+    transition: 1s;
     position: fixed;
     left: 95%;
     top: 90%;
