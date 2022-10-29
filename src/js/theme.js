@@ -2,11 +2,13 @@ export function themeButton() {
     let btn = $("#themeButton");
     let mode = localStorage.getItem("mode");
     if (mode == "dark") {
-        btn.attr("src", "/img/night.png")
+        btn.attr("src", "/img/night.png");
+        btn.css({filter : "invert(100%)"});
     }
     else {
-        btn.attr("src", "/img/light.png")
+        btn.attr("src", "/img/light.png");
         localStorage.setItem("mode", "light");
+        btn.css({filter : "invert(0%)"});
     }
 
     btn.on("click", function() {
@@ -14,13 +16,13 @@ export function themeButton() {
         if (mode == "dark") {
             localStorage.setItem("mode", "light");
             btn.attr("src", "/img/light.png");
-            btn.css({filter : "invert(0%)"});
+            btn.css({filter: "invert(0%)"});
             setTheme(false);
         }
         else {
             localStorage.setItem("mode", "dark");
             btn.attr("src", "/img/night.png");
-            btn.css({filter : "invert(100%)"});
+            btn.css({filter: "invert(100%)"});
             setTheme(true);
         }
     })
