@@ -21,7 +21,7 @@ export async function authUser() {
         }
         return guest;
     }
-    catch(err) {
+    catch {
         localStorage.removeItem("jwt");
         localStorage.setItem("user", JSON.stringify(guest));
         return guest;
