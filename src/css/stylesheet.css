@@ -38,8 +38,8 @@ a {
     opacity: 0.65;
     transition: 1s;
     position: fixed;
-    left: 95%;
-    top: 90%;
+    left: calc(97% - 45px);
+    top: calc(95% - 45px);
     width: 45px;
     height: 45px;
 }
