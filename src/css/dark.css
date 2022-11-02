@@ -16,13 +16,15 @@ body.bg-black {
 }
 
 .bg-black input,
-.bg-black select {
+.bg-black select,
+.bg-black textarea {
     background: black;
     color: white;
 }
 
 .bg-black input:focus,
 .bg-black select:focus,
+.bg-black textarea:focus,
 .bg-black input:disabled,
 .bg-black select:disabled {
     background: #212529;

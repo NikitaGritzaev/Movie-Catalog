@@ -2,7 +2,8 @@ import { loginUser } from "/src/js/auth.js";
 export function initLoginPage() {
     $(".log").fadeOut(0).fadeIn(1000);
     $("#loginBtn").on("click", async () => {
-        if (!checkPassword() || !checkLogin()) return;
+        let check01 = checkPassword(), check02 = checkLogin();
+        if (!check01 || !check02) return;
         $("#login").prop("disabled", true);
         $("#password").prop("disabled", true);
         $("#loginBtn").addClass("disabled");

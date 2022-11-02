@@ -17,7 +17,9 @@ export function filmSetup(newMovie, currentMovie) {
     else {
         badgeRating.text("Ещё нет оценок");
     }
-    newMovie.on("click", () => newMovie.find("a")[0].click());
+    newMovie.on("click", event => {
+        if ($(event.target).prop("tagName") != "BUTTON") newMovie.find("a")[0].click();
+    });
 
     return newMovie;
 }

@@ -11,21 +11,23 @@ export function initRegisterPage() {
         let birth = $("#birthday").val();
         let sex = $("#gender").val();
         let blinking;
+        let checks = [checkPassword(), checkName(), checkLogin(),
+                      checkEmail(), checkConfirm(), checkBirthday()];
         try {
-            if (!checkPassword() || !checkName() || !checkLogin() ||
-                !checkEmail() || !checkConfirm() || !checkBirthday()) return;
+            for (let i = 0; i < checks.length; ++i) {
+                if (!checks[i]) return;
+            }
             $("#signUpBtn").addClass("disabled");
-            $("input").prop("disabled", true);
-            $(".reg").fadeTo(100, 0.3, function() { $(this).fadeTo(500, 1.0); });
-            blinking = setInterval(function() {
-                $(".reg").fadeTo(100, 0.3, function() { $(this).fadeTo(500, 1.0); });
+            $("input, select").prop("disabled", true);
+            $(".reg").fadeTo(100, 0.3, function () { $(this).fadeTo(500, 1.0); });
+            blinking = setInterval(function () {
+                $(".reg").fadeTo(100, 0.3, function () { $(this).fadeTo(500, 1.0); });
             }, 2000);
             let regAttempt = await registerUser(log, pass, passConfirm, email, name, birth, sex);
-            console.log(regAttempt);
-            if (regAttempt) location.pathname = "/";
+            if (regAttempt.ok) location.href = "/";
             else {
                 $("#regWarn").remove();
-                $("#signUpBtn").before(`<p class="text-danger" id="regWarn">Ошибка!</p>`);
+                $("#signUpBtn").before(`<p class="text-danger" id="regWarn">${regAttempt.msg}</p>`);
             }
         }
         catch {
@@ -34,14 +36,14 @@ export function initRegisterPage() {
         finally {
             clearInterval(blinking);
             $("#signUpBtn").removeClass("disabled");
-            $("input").prop("disabled", false);
+            $("input, select").prop("disabled", false);
         }
     });
 
     let checkConfirm = () => {
         let pass = $("#password").val();
         let passConfirm = $("#passwordConfirm").val();;
-        if (pass != passConfirm && pass && passConfirm) {
+        if (pass != passConfirm) {
             if ($("#passConfirmWarn").length) return;
             $("#passwordConfirm").after(`<p class="text-danger" id="passConfirmWarn">Пароли не совпадают</p>`);
             $("#password").addClass("is-invalid");
@@ -134,10 +136,10 @@ export function initRegisterPage() {
         }
     }
     $("#email").on("change", checkEmail);
-     
+
     let checkBirthday = () => {
         let date = new Date($("#birthday").val());
-        if (date > Date.now() || date < new Date("1900-01-01")) {
+        if (date == "Invalid Date" || date > Date.now() || date < new Date("1900-01-01")) {
             $("#birthday").addClass("is-invalid");
             $("#birthdayWarn").remove();
             $("#birthday").after(`<p class="text-danger" id="birthdayWarn">Некорректная дата</p>`);
@@ -150,6 +152,6 @@ export function initRegisterPage() {
         }
     }
     $("#birthday").on("change", checkBirthday);
-    
+
     $("#birthday").attr("max", new Date().toISOString().split("T")[0]);
 }

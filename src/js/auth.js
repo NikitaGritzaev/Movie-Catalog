@@ -94,7 +94,10 @@ export async function registerUser(log, pass, passConfirm, email, name, birth, s
         !name.match(/^[а-яА-ЯёЁa-zA-Z0-9\-_ ]+$/) ||
         !email.match(/^\S+@\S+\.\S+$/) ||
         date > Date.now() ||
-        date < new Date("1900-01-01")) return;
+        date < new Date("1900-01-01")) return {
+            ok: false,
+            msg: "Некорректный ввод!"
+        };
 
     try {
         let response = await fetch(`${api_url}/account/register`, {
@@ -115,9 +118,19 @@ export async function registerUser(log, pass, passConfirm, email, name, birth, s
         if (response.ok) {
             let json = await response.json();
             localStorage.setItem("jwt", json.token);
-            location.pathname = "/";
+            return {
+                ok: true,
+                msg: "Успех"
+            };
         }
-    } catch {
-        alert("ошибка!")
+        return {
+            ok: false,
+            msg: response.status == 409 ? "Этот никнейм/email уже используется" : "Ошибка"
+        }
+    } catch(err) {
+        return {
+            ok: false,
+            msg: "Неизвестная ошибка"
+        }
     }
 }
