@@ -43,8 +43,8 @@ async function showPagination(page, pagination, pages) {
     if (page <= 1) pagesElement.find("#back").addClass("disabled");
     if (page >= pages) pagesElement.find("#forward").addClass("disabled");
 
-    pagesElement.find("#back").attr("href", `/${+page - 1}`);
-    pagesElement.find("#forward").attr("href", `/${+page + 1}`);
+    pagesElement.find("#back").attr("href", `/1`);
+    pagesElement.find("#forward").attr("href", `/${pages}`);
 
     let page1 = pagesElement.find("#page1");
     let page2 = pagesElement.find("#page2");

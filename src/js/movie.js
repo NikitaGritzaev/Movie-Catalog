@@ -32,7 +32,6 @@ export async function showDetails(filmId) {
     let currentUser = JSON.parse(localStorage.getItem("user"));
     if (currentUser?.auth) {
         let favorites =  await getFavoriteFilms();
-        console.log(favorites);
 
         let isAdded = false;
         let toggleButton = $("#toggleFavorite"); 

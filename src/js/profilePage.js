@@ -96,7 +96,7 @@ export async function initProfilePage() {
             }
         }
         catch(err) {
-            console.log(err)
+            throw err;
         }
         finally {
             clearInterval(blinking);
