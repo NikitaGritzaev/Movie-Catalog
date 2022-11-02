@@ -22,6 +22,7 @@ export async function changeProfile(email, avatarLink, name, birth, sex) {
         !name.match(/^[а-яА-ЯёЁa-zA-Z0-9\-_ ]+$/) ||
         !email.match(/^\S+@\S+\.\S+$/) ||
         !email.match(/^\S+@\S+\.\S+$/) ||
+        birth == "Invalid Date" ||
         birth > Date.now() ||
         birth < new Date("1900-01-01")) return false;
 

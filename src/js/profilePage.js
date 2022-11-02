@@ -41,7 +41,7 @@ export async function initProfilePage() {
 
     let checkBirthday = () => {
         let date = new Date($("#birthday").val());
-        if (date > Date.now() || date < new Date("1900-01-01")) {
+        if (date == "Invalid Date" || date > Date.now() || date < new Date("1900-01-01")) {
             $("#birthday").addClass("is-invalid");
             $("#birthdayWarn").remove();
             $("#birthday").after(`<p class="text-danger" id="birthdayWarn">Некорректная дата</p>`);
