@@ -19,7 +19,7 @@ let router = {
         { pattern: /^\/([0-9]*)$/, callback: "catalog", nav: ["moviesLink"] }
     ],
 
-    dispatch: function (path, pushHistory = true) {
+    dispatch: function(path, pushHistory = true) {
         for (let i = 0; i < this.routes.length; ++i) {
             let args = path.match(this.routes[i].pattern);
             if (args) {
@@ -36,7 +36,7 @@ let router = {
         routerFunctions["default"]();
     },
 
-    init: async function () {
+    init: async function() {
         await setNavbar();
         themeButton();
         $(document).on("click", function (event) {
@@ -48,7 +48,7 @@ let router = {
         });
     },
 
-    checkLogin: function () {
+    checkLogin: function() {
         let user = localStorage.getItem("user");
         return (user && JSON.parse(user).auth);
     }
